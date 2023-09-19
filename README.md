@@ -5,7 +5,7 @@ Developed by Joseph Fuge, started in September 2023
 
 ### Elevator Pitch
 
-Just about everyone enjoyed a simple game of Tic-Tac-Toe as a child. Unfortunately, its simplicity and limited size means that strategy is limited and its novelty wears off quickly. With **Recursive Tic-Tac-Toe**, you can select up to three layers of Tic-Tac-Toe games; in order to mark a square at the last layer, you have to win a Tic-Tac-Toe game within that square. Once you win three Tic-Tac-Toe games in a row at on the third layer, you have now marked a square on the second layer, until you get to the first. Feel free to leave your game and come back later or play it asynchronously when you have a spare moment until you prove your superior Tic-Tac-Toe strategy once and for all.
+Just about everyone enjoyed a simple game of Tic-Tac-Toe as a child. Unfortunately, its simplicity and limited size means that strategy is limited and its novelty wears off quickly. All of this is remedied with **Recursive Tic-Tac-Toe**, where you can play a game up to three layers deep. Allow me to explain; in order to mark a square on the second layer, you have to win a Tic-Tac-Toe game within that square. Once you win three Tic-Tac-Toe games in a row on the second layer, you have now marked a square on the first layer. Feel free to leave your game and come back later or play it asynchronously when you have a spare moment until you prove your superior Tic-Tac-Toe strategy once and for all.
 
 ### Key Features
 
