@@ -12,7 +12,7 @@ Just about everyone enjoyed a simple game of Tic-Tac-Toe as a child. Unfortunate
 - User login
 - Create games or continue in-progress matches
 - Navigate through several layers of tic-tac-toe
-- Participate in games asynchronously, progressing them even if only one user is online
+- Participate in games asynchronously, advancing them even if only one user is online
 - Alternatively, both users can play at the same time through realtime updates
 - Send emoji reactions in realtime if both users are present
 - User can see how many games they have won total
