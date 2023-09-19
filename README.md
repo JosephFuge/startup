@@ -22,9 +22,9 @@ Just about everyone enjoyed a simple game of Tic-Tac-Toe as a child. Unfortunate
 - CSS; styling for each page of HTML for an appealing aesthetic
 - JavaScript; allows for dynamic functionality and display updates while on a page, communication with server
 - Service; web service with endpoints for:
-    - login
+    - authentication
     - fetch in-progress games
-    - send in moves for ongoing games
+    - send in and receive moves for ongoing games
     - create new games
     - allow emojis to be sent and received
 - Database; store users, choices, and votes in database
