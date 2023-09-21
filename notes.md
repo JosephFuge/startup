@@ -8,3 +8,18 @@
 - Pull requests are how you can submit suggested changes to a forked repo or simply to another branch within a repo.
 
 
+## AWS EC2 Assignment
+Public IP Address: 3.223.171.18
+
+### Associate a permanent IP address with your EC2 instance
+Will cause you to be charged for time the server is *not* running (your first elastic IP address is otherwise free)
+
+1. Open the AWS console in your browser and log in.
+2. Navigate to the EC2 service.
+3. From the menu on the left select Network & Security|Elastic IPs.
+4. Press the Allocate Elastic IP address button.
+5. Press the Allocate button.
+6. Select the newly displayed allocated address and press the Actions button.
+7. Select the Associate Elastic IP address option.
+8. Click on the Instance box and select your server instance.
+9. Press Associate.
