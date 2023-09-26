@@ -23,3 +23,15 @@ Will cause you to be charged for time the server is *not* running (your first el
 7. Select the Associate Elastic IP address option.
 8. Click on the Instance box and select your server instance.
 9. Press Associate.
+
+Basic HTML document structure:
+<html>
+  <head>
+    <title>My First Page</title>
+  </head>
+  <body>
+    <main>
+      <p>Hello world</p>
+    </main>
+  </body>
+</html>
