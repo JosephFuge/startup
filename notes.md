@@ -66,6 +66,14 @@ ENDSSH
 
 Use the $ sign to reference command-line arguments
 
+## StartUp HTML Assignment
 
+### Inputs
+formaction attribute of inputs can override what it does (allowing you to redirect to other html pages)
+placeholder attribute of inputs can put hint text in the "text" and "password" input types
+
+### SVGs
+You can create your own custom SVG with a website like https://uxwing.com/svg-icon-editor/ and import it directly into your html
+Be careful about the original size of the SVG, this is not easy to change
 
 
