@@ -35,3 +35,37 @@ Basic HTML document structure:
     </main>
   </body>
 </html>
+
+## Simon HTML Assignment
+
+### SVG Paths
+Preceding with the M letter inside the 'd' attribute of the path tag (which goes inside the svg tag) tells the path to "Move to" the proceding coordinates with straight lines
+
+Preceding with the Q letter tells it to form a quadratic curve from the first coordinates that follow to the second ones
+
+Preceding with the T letter tells it to form a smooth quadratic curve
+
+### Bash script
+Get commandline arguments with:
+while getopts k:h:s: flag
+do
+    case "${flag}" in
+        k) key=${OPTARG};;
+        h) hostname=${OPTARG};;
+        s) service=${OPTARG};;
+    esac
+done
+
+Note that the above script does not include validation
+
+Use the double less-than << operator to assign whatever is on the lefthand side to end when it encounters what's on the right-hand side, in this example to end the ssh session:
+ssh -i "$key" ubuntu@$hostname << ENDSSH
+rm -rf services/${service}/public
+mkdir -p services/${service}/public
+ENDSSH
+
+Use the $ sign to reference command-line arguments
+
+
+
+
