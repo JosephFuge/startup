@@ -1,1 +1,0 @@
-hello and good morning to you too sir, would you like a waffle? Maybe two or three?
