@@ -41,3 +41,15 @@ This is what the game screen will look like when the user is actively playing a 
 The following diagram demonstrates a typical flow of two users logging in and beginning a game with one another.
 
 ![TicTacToe Backend Server Diagram](RecursiveTic-Tac-ToeBackend.png)
+
+## HTML Startup Deliverable
+
+During this deliverable I built out the structure of my Recursive TicTacToe startup application in HTML.
+
+HTML: Five HTML pages to account for logging in, creating a game, selecting a game, playing a game, and reading about Recursive TicTacToe.
+Links: The login page links to the about page and to the game select page upon logging in or registering. From the game select page, you can navigate to an existing game or to the game creation page.
+Text Content: The about page contains a description of Recursive TicTacToe.
+Images: Added an image to the about page. Otherwise, I elected to use svg icons throughout the website.
+Login - Username and password text inputs and a submit button for registration and login.
+Database - The ongoing games will be generated from data pulled from the database.
+WebSocket - Realtime game changes and emoji reactions on the game screen.
