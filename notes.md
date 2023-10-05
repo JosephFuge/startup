@@ -96,6 +96,9 @@ Then, using the same name entered for the animation-name, create keyframes:
 Besides just "from" and "to", you can add frames using percentages.
 Use transform: rotate(xdeg) to rotate however many degrees desired
 
+Preserve the last frame of the animation (great for using on :hover animations):
+animation-fill-mode: forwards ;
+
 ### Flex
 
 Achieve relative sizing with:
@@ -135,4 +138,16 @@ Change CSS rulesets based on details of the display (i.e. size, orientation)
 }
 
 i.e. orientation: landscape
+
+## Startup CSS Assignment
+
+### Linear Gradients
+
+With the following attributes in the header ruleset:
+
+border-bottom: 5px solid;
+border-image: linear-gradient(45deg, #0863a0, 10%, #27363e 80%) 1;
+
+I can create a gradient border at full strength at the left fading to half strength by the time I get 10% of the way there, and then all the way to the final color by the time I'm at 80% across.
+
 
