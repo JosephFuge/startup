@@ -76,4 +76,63 @@ placeholder attribute of inputs can put hint text in the "text" and "password" i
 You can create your own custom SVG with a website like https://uxwing.com/svg-icon-editor/ and import it directly into your html
 Be careful about the original size of the SVG, this is not easy to change
 
+## Simon CSS & Practice CSS Assignments
+
+### Animation
+
+Bare minimum is to put the "animation-name" and "animation-duration" properties in the CSS ruleset of the element you are animating.
+
+Then, using the same name entered for the animation-name, create keyframes:
+@keyframes slider {
+  from {
+    transform: translateX(-1000px);
+  }
+
+  to {
+    transform: translateX(0px);
+  }
+}
+
+Besides just "from" and "to", you can add frames using percentages.
+Use transform: rotate(xdeg) to rotate however many degrees desired
+
+### Flex
+
+Achieve relative sizing with:
+
+display: flex;
+flex-direction: column; (or row)
+
+Then, in child elements, specify a flex amount:
+
+flex: flex-grow flex-shrink flex-basis|auto|initial|inherit;
+
+For example, you can set the footer to the bottom by making the whole body display: flex, then giving the footer the following property:
+margin-top: auto;
+
+### Grid
+
+Lay elements out in a grid. Grid can adjust number of elements per row with the right properties.
+
+Example: 
+"We want all rows to be exactly 300 pixels high with the grid-auto-rows property and the use the grid-gap property to say that we want at least a 1 em gap between our grid items:
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 300px;
+  grid-gap: 1em;
+}"
+
+### Media Query
+
+Change CSS rulesets based on details of the display (i.e. size, orientation)
+
+@media (max-width: 800px) {
+  .flex-item-right, .flex-item-left {
+    flex: 100%;
+  }
+}
+
+i.e. orientation: landscape
 
