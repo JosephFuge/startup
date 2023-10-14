@@ -4,6 +4,8 @@ body {
     color: #E2ECF4;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 header {
@@ -18,12 +20,57 @@ header > h1 {
     align-items: center;
 }
 
-nav {
-    margin-bottom: 16px;
-
+span, span * {
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
 }
 
-a.rounded-button {
+.rounded-button > * {
+    background-color: transparent;
+    color: white;
+    border: none;
+    /* justify-content: center; */
+    cursor: pointer;
+}
+
+#loginForm .rounded-button {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+
+#loginForm {
+    align-items: center;
+    text-align: center;
+}
+
+
+nav {
+    margin-bottom: 16px;
+    display:inline-flex;
+}
+
+a:visited {
+    color: white;
+}
+
+nav.rounded-button {
+    margin-left: 16px;
+}
+
+.nav-button-icon {
+    max-width: 24px;
+    max-height: 24px;
+    color: white;
+}
+
+.rounded-button {
+    margin-left: 8px;
+    margin-right: 8px;
     border-radius: 5px;
     border: solid thin white;
     padding: 0px 8px 0px 8px;
@@ -34,11 +81,17 @@ a.rounded-button {
     text-decoration: none;
     color: white;
     vertical-align:middle;
+    cursor: pointer;
 }
 
-a.rounded-button:hover {
+.rounded-button > input:focus {
+    border: none;   
+    outline: 0;
+}
+
+.rounded-button:hover {
     animation-name: buttonGlow;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
 
@@ -72,6 +125,8 @@ a.rounded-button:hover {
     width: 15em;
     height: 2em;
     color: white;
+    border-color: white;
+    border-radius: 5px;
 
     background-color: #0863a0;
     margin-bottom: 16px;
@@ -80,4 +135,17 @@ a.rounded-button:hover {
 .text-field::placeholder {
     color: gainsboro;
     margin-left: 30px;
+}
+
+#newGame {
+    width: 5em;
+}
+
+#createButton {
+    width: 11em;
+}
+
+#acceptRequest, #rejectRequest, #newGame, #createButton {
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
