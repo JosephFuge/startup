@@ -121,6 +121,10 @@ nav.rounded-button {
     align-items: center;
 }
 
+.central-block {
+    text-align: center;
+}
+
 .text-field {
     width: 15em;
     height: 2em;
@@ -135,6 +139,31 @@ nav.rounded-button {
 .text-field::placeholder {
     color: gainsboro;
     margin-left: 30px;
+}
+
+#selectGameNav {
+    width: 7.8em;
+}
+
+#newGameForm {
+    background-color: #27363e;
+    border: 1px white solid;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#newGameForm > p {
+    margin-top: 0px;
+    margin-bottom: 4px;
+}
+
+#recursionLayersSelect {
+    width: 6.5em;
 }
 
 #newGame {

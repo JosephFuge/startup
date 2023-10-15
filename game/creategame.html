@@ -28,23 +28,25 @@
             </g>
            </svg>Recursive TicTacToe Startup - Home</h1>
         <nav>
-            <a class="rounded-button" href="/index.html"><svg class="nav-button-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 24 24"><path d="M22 11.414v12.586h-20v-12.586l-1.293 1.293-.707-.707 12-12 12 12-.707.707-1.293-1.293zm-6 11.586h5v-12.586l-9-9-9 9v12.586h5v-9h8v9zm-1-7.889h-6v7.778h6v-7.778z"/></svg><p> Home</p></a>
-            <a class="rounded-button" href="/game/gameselect.html"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 17h-12v-2h12v2zm0-4h-12v-2h12v2zm0-4h-12v-2h12v2z"/></svg><p> Select Game</p></a>
-            <a class="rounded-button" href="/about.html"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-8h2v8zm-1-12.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/></svg><p> About</p></a>
+            <a class="rounded-button" href="/index.html"><svg class="nav-button-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 24 24"><path fill="currentColor" d="M22 11.414v12.586h-20v-12.586l-1.293 1.293-.707-.707 12-12 12 12-.707.707-1.293-1.293zm-6 11.586h5v-12.586l-9-9-9 9v12.586h5v-9h8v9zm-1-7.889h-6v7.778h6v-7.778z"/></svg><p class="nav-button-text"> Home</p></a>
+            <a class="rounded-button" id="selectGameNav" href="/game/gameselect.html"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 17h-12v-2h12v2zm0-4h-12v-2h12v2zm0-4h-12v-2h12v2z"/></svg><p class="nav-button-text"> Select Game</p></a>
+            <a class="rounded-button" href="/about.html"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-8h2v8zm-1-12.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/></svg><p class="nav-button-text"> About</p></a>
         </nav>
     </header>
 
-    <h1>Create New Game</h1>
-    <form id="newGameForm">
-        <input type="text" class="text-field" id="opponentUsername" placeholder="Opponent Username">
-        <p>How many additional layers of recursion do you want?</p>
-        <select>
-            <option>1 layer</option>
-            <option>2 layers</option>
-        </select>
-        <br>
-        <input class="rounded-button" type="submit" id="createButton" formaction="/game/gameselect.html" value="Send Game Request">
-    </form>
+    <div class="central-block">
+        <h2 class="page-title">Create New Game</h2>
+        <form id="newGameForm">
+            <input type="text" class="text-field" id="opponentUsername" placeholder="Opponent Username">
+            <p>How many additional layers of recursion do you want?</p>
+            <select class="rounded-button" id="recursionLayersSelect">
+                <option>1 layer</option>
+                <option>2 layers</option>
+            </select>
+            <br>
+            <input class="rounded-button" type="submit" id="createButton" formaction="/game/gameselect.html" value="Send Game Request">
+        </form>
+    </div>
     <br>
     <p>Author: Joseph Fuge</p>
     <a href="https://github.com/JosephFuge/startup">GitHub</a>
