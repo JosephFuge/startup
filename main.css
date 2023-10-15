@@ -1,11 +1,12 @@
 
 body {
     background-color: #13181B;
+    display: flex;
+    flex-direction: column;
     color: #E2ECF4;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    min-height: 100vh;
     margin: 0;
-    padding-left: 16px;
-    padding-right: 16px;
 }
 
 header {
@@ -68,6 +69,27 @@ nav.rounded-button {
     color: white;
 }
 
+
+.nav-button-text {
+    margin-left:8px;
+    font-size:14px;
+}
+
+footer {
+    width: 100%;
+    background-color: #27363e;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-top: 5px solid;
+    border-image: linear-gradient(45deg, #0863a0, 10%, #27363e 80%) 1;
+}
+
+footer > * {
+    display: inline;
+    padding-left: 16px;
+}
+
+
 .rounded-button {
     margin-left: 8px;
     margin-right: 8px;
@@ -105,12 +127,8 @@ nav.rounded-button {
     }
 }
 
-.nav-button-text {
-    margin-left:8px;
-    font-size:14px;
-}
-
 #centralLoginBlock {
+    flex: 1;
     text-align: center;
     /* width: 30%; */
 }
@@ -123,13 +141,16 @@ nav.rounded-button {
 
 .create-body, .select-body {
     text-align: center;
+    flex:1;
 }
 
 #createNewGame {
     display: inline-block;
 }
 
-
+#aboutContent {
+    flex: 1;
+}
 
 .text-field {
     width: 15em;
@@ -196,12 +217,14 @@ a.play-game {
 
 
 #gameBoard {
+    flex:1;
     display:block;
     text-align: center;
 }
 
 #user1, #user2 {
     position: absolute;
+    bottom: 0px;
     display: inline-block;
     text-align: center;
 }
