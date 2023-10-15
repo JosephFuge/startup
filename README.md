@@ -60,3 +60,18 @@ During this deliverable I built out the structure of my Recursive TicTacToe star
 
 **WebSocket:** Realtime game changes and emoji reactions on the game screen.
 
+## CSS Startup Deliverable
+
+During this deliverable I built out the styling of my Recursive TicTacToe startup application in CSS.
+
+**Header, Footer, Main Content:** Header and footer stay at the bottom and tops of the pages and have their own background color and borders.
+
+**Navigation elements:** Navigation buttons are styled with a separate color and glow on mouse hover
+
+**Responsive to window resizing:** The Select Game and Play Game pages resize certain elements when the window is narrower
+
+**Application elements:** Elements such as game cards, profile icon and emoji reactions, and other icons and elements are repositioned and styled using CSS. Includes gradients, glowing on hover, borders and border-radii, and more.
+
+**Text content:** Text is realigned, colored, and has its font changed
+
+**Images:** Gave glowing border to the image on the about page and positioned the svgs throughout the site.
