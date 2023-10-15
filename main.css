@@ -89,7 +89,7 @@ nav.rounded-button {
     outline: 0;
 }
 
-.rounded-button:hover {
+.rounded-button:hover, .rounded-button:focus {
     animation-name: buttonGlow;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
@@ -121,9 +121,15 @@ nav.rounded-button {
     align-items: center;
 }
 
-.central-block {
+.create-body, .select-body {
     text-align: center;
 }
+
+#createNewGame {
+    display: inline-block;
+}
+
+
 
 .text-field {
     width: 15em;
@@ -136,6 +142,12 @@ nav.rounded-button {
     margin-bottom: 16px;
 }
 
+.text-field:focus {
+    animation-name: buttonGlow;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
 .text-field::placeholder {
     color: gainsboro;
     margin-left: 30px;
@@ -143,6 +155,43 @@ nav.rounded-button {
 
 #selectGameNav {
     width: 7.8em;
+}
+
+.async-game {
+    display: inline-block;
+    background-color:#27363e;
+    border: 1px white solid;
+    border-radius: 10px;
+    padding-top: 16px;
+    padding-left: 16px;
+    margin-bottom: 32px;
+    width: 30%;
+}
+
+a {
+    color: white;
+}
+
+a.play-game {
+    text-decoration: none;
+}
+
+.play-game:hover {
+    animation-name: buttonGlow;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@media screen and (max-width: 900px) {
+    header h1 {
+        background-clip: text;
+        overflow:hidden;
+        /* text-overflow: ellipsis; */
+    }
+
+    .async-game {
+        width: 300px;
+    }
 }
 
 #newGameForm {
@@ -167,7 +216,7 @@ nav.rounded-button {
 }
 
 #newGame {
-    width: 5em;
+    width: 5.5em;
 }
 
 #createButton {
