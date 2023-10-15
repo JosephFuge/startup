@@ -207,11 +207,18 @@ a.play-game {
     header h1 {
         background-clip: text;
         overflow:hidden;
-        /* text-overflow: ellipsis; */
     }
 
     .async-game {
         width: 300px;
+    }
+
+    #gameBoard {
+        transform: scale(50%);
+    }
+
+    #user2 {
+        visibility: hidden;
     }
 }
 
