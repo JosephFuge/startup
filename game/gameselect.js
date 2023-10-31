@@ -69,5 +69,9 @@ function displayGames() {
         }
     }
 
+    dynamicBody += '<div id="createNewGame">\
+    <a class="rounded-button" id="newGame" href="/game/creategame.html"><input type="submit" value="New Game +"></a>\
+</div>';
+
     document.getElementById("gameSelectContent").innerHTML = dynamicBody;
 }
