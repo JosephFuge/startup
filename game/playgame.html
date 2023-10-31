@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/main.css">
     <link rel="stylesheet" type="text/css" href="/game/playgame.css">
+    <script type="text/javascript" src="/services.js"></script>
+    <!-- <script type="text/javascript" src="/game/play.js"></script> -->
     <title>Recursive TicTacToe - Play</title>
 </head>
-<body>
+<body onload="setName();">
     <header>
         <h1><svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
 
@@ -33,6 +35,10 @@
             <a href="/game/gameselect.html" class="rounded-button" id="selectGameNav"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 17h-12v-2h12v2zm0-4h-12v-2h12v2zm0-4h-12v-2h12v2z"/></svg><p class="nav-button-text"> Select Game</p></a>
             <a href="/about.html" class="rounded-button"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-8h2v8zm-1-12.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/></svg><p class="nav-button-text"> About</p></a>
         </nav>
+        <div id="usernameBlock">
+            <p></p>
+            <h2  id="userNameText"></h2>
+        </div>
     </header>
 
     <!-- To be replaced with an interactive canvas later on, most likely. If not, then some kind of styled table with buttons. -->
