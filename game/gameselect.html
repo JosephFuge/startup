@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/main.css">
-    <script src="models.js"></script>
+    <script src="/game/models.js"></script>
     <script type="text/javascript" src="/game/databaseAccess.js"></script>
     <script type="text/javascript" src="/services.js"></script>
     <script type="text/javascript" src="/game/gameselect.js"></script>
     </script>
     <title>Recursive TicTacToe - Select</title>
 </head>
-<body onload="setName();">
+<body onload="setName();displayGames();">
     <header>
         <h1><svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
 
@@ -41,8 +41,7 @@
             <h2  id="userNameText"></h2>
         </div>
     </header>
-    <div class="select-body">
-        <h2>Select a Game</h2>
+    <div id="gameSelectContent" class="select-body">
         <div class="async-game">
             <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
 
