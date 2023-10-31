@@ -75,3 +75,13 @@ During this deliverable I built out the styling of my Recursive TicTacToe startu
 **Text content:** Text is realigned, colored, and has its font changed
 
 **Images:** Gave glowing border to the image on the about page and positioned the svgs throughout the site.
+
+## JavaScript Startup Deliverable
+
+**Future Login Support:** User can type their name in and click login, which will store their name to LocalStorage and display it in headers throughout the website
+
+**Future Database Data Support:** databaseAccess.js file contains a getUserGames() function to retrieve user games in the future. This file will also be the home of any other future reads and writes to/from the database.
+
+**Future Websocket Support:** websocketAccess.js file contains a getUserEmoji function that will retrieve realtime emoji updates in the future.
+
+**Interaction Logic:** Game cards fill dynamically with database data. User clicking to mark square is close to done.
