@@ -29,7 +29,7 @@
 
 #user1Emoji, #user2Emoji {
     border-radius: 100%;
-    display: inline;
+    display: none;
     padding: 8px;
     font-size: 24px;
 }

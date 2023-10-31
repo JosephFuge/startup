@@ -12,7 +12,7 @@ function getUserGames() {
         ['o', '', '', 'x', '', '', '', '', 'o'],
         ['', '', '', '', '', '', '', '', ''],
         ['', 'o', '', '', 'x', '', '', '', '']]};
-        
+
     const userGameData2 = {user1: "Marcos", user2: currentUser, userTurn: 1, gameData: [
         ['', '', '', '', 'x', '', '', '', ''], 
         ['', '', '', '', '', '', '', '', ''],
