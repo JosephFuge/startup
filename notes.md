@@ -151,3 +151,29 @@ border-image: linear-gradient(45deg, #0863a0, 10%, #27363e 80%) 1;
 I can create a gradient border at full strength at the left fading to half strength by the time I get 10% of the way there, and then all the way to the final color by the time I'm at 80% across.
 
 
+## JavaScript
+
+### Promises and Async/Await
+
+Example:
+
+```const coinToss = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (Math.random() > 0.1) {
+      resolve(Math.random() > 0.5 ? 'heads' : 'tails');
+    } else {
+      reject('fell off table');
+    }
+  }, 10000);
+});
+```
+We then chain the then, catch and finally functions to the coinToss object in order to handle each of the possible results.
+
+```coinToss
+  .then((result) => console.log(`Coin toss result: ${result}`))
+  .catch((err) => console.log(`Error: ${err}`))
+  .finally(() => console.log('Toss completed'));
+
+// OUTPUT:
+//    Coin toss result: tails
+//    Toss completed```

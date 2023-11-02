@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="/login.js"></script>
     <title>Recursive TicTacToe Home</title>
 </head>
 <body>
@@ -43,7 +44,7 @@
             <input type="password" id="password" class="text-field" placeholder="Password">
             <span>
                 <a class="rounded-button" href="/game/gameselect.html"><input type="submit" formaction="/game/gameselect.html" value="Register"></a>
-                <a class="rounded-button" href="/game/gameselect.html"><input type="submit" formaction="/game/gameselect.html" value="Login"></a>
+                <input class="rounded-button" type="button" onclick="login();" value="Login">
             </span>
         </form>
     </div>

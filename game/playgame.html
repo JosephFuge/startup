@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/main.css">
+    <link rel="stylesheet" type="text/css" href="/game/playgame.css">
+    <script type="text/javascript" src="/services.js"></script>
+    <script type="text/javascript" src="/game/websocketAccess.js"></script>
+    <script type="text/javascript" src="/game/playgame.js"></script>
+    <!-- <script type="text/javascript" src="/game/play.js"></script> -->
     <title>Recursive TicTacToe - Play</title>
 </head>
-<body>
+<body onload="setName();setUserEmojiReaction();">
     <header>
         <h1><svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
 
@@ -32,6 +37,10 @@
             <a href="/game/gameselect.html" class="rounded-button" id="selectGameNav"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 17h-12v-2h12v2zm0-4h-12v-2h12v2zm0-4h-12v-2h12v2z"/></svg><p class="nav-button-text"> Select Game</p></a>
             <a href="/about.html" class="rounded-button"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-8h2v8zm-1-12.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/></svg><p class="nav-button-text"> About</p></a>
         </nav>
+        <div id="usernameBlock">
+            <p></p>
+            <h2  id="userNameText"></h2>
+        </div>
     </header>
 
     <!-- To be replaced with an interactive canvas later on, most likely. If not, then some kind of styled table with buttons. -->
@@ -51,6 +60,8 @@
                 <a href=""> 
                 <path stroke="#000" id="svg_6" d="m170.32499,94.8975l0,0c0,-34.51779 27.98221,-62.5 62.5,-62.5l0,0c16.57602,0 32.47315,6.5848 44.19417,18.30582c11.72103,11.72103 18.30584,27.61814 18.30584,44.19418l0,0c0,34.51779 -27.98221,62.5 -62.5,62.5l0,0c-34.51779,0 -62.5,-27.98221 -62.5,-62.5zm31.25,0l0,0c0,17.25889 13.99111,31.25 31.25,31.25c17.2589,0 31.25,-13.99111 31.25,-31.25c0,-17.25889 -13.99111,-31.25 -31.25,-31.25l0,0c-17.25889,0 -31.25,13.99111 -31.25,31.25z" fill="#007fff"/>
                 </a>
+                
+                <rect onclick="markSquare(true, 'square_2');" id="square_2" height="96" width="96" y="35" x="380" stroke="#000" fill="#13181B"/>
                 <a href=""> 
                 <path id="svg_8" d="m559.09506,459.60339l31.27592,-31.27592l33.22392,33.22365l33.22392,-33.22365l31.27621,31.27592l-33.22393,33.22392l33.22393,33.22392l-31.27621,31.27621l-33.22392,-33.22393l-33.22392,33.22393l-31.27592,-31.27621l33.22365,-33.22392l-33.22365,-33.22392z" stroke="#000" fill="#ff0000"/>
                 </a>
@@ -64,11 +75,11 @@
         <span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
             <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/>
         </svg></span>
-        <p id="user1Emoji">😂</p>
+        <p id="user1Emoji"></p>
         <p>You</p>
     </div>
     <div id="user2">
-        <p id="user2Emoji">😢</p>
+        <p id="user2Emoji"></p>
         <span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
             <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/>
         </svg></span>

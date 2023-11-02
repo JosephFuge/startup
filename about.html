@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <script type="text/javascript" src="/services.js"></script>
     <title>Recursive TicTacToe About</title>
 </head>
-<body>
+<body onload="setName();">
     <header>
         <h1><svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
 
@@ -31,7 +32,10 @@
             <a class="rounded-button" href="/index.html"><svg class="nav-button-icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path fill="currentColor" d="M22 11.414v12.586h-20v-12.586l-1.293 1.293-.707-.707 12-12 12 12-.707.707-1.293-1.293zm-6 11.586h5v-12.586l-9-9-9 9v12.586h5v-9h8v9zm-1-7.889h-6v7.778h6v-7.778z"/></svg><p class="nav-button-text"> Home</p></a>
 
         </nav>
-        
+        <div id="usernameBlock">
+            <p></p>
+            <h2  id="userNameText"></h2>
+        </div>
     </header>
 
     <div id="aboutContent">
