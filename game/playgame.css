@@ -27,6 +27,17 @@
     right: 16px;
 }
 
+.tictactoe-square {
+    color: #13181B;
+}
+
+.tictactoe-square:hover {
+    color: #007fff;
+    opacity: 0.5;
+    cursor: pointer;
+    /* display: inherit; */
+}
+
 #user1Emoji, #user2Emoji {
     border-radius: 100%;
     display: none;
