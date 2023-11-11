@@ -22,43 +22,46 @@ function setUserEmojiReaction() {
 }
 
 function getXandY(isCircle, squareNum) {
+    const xOffSet = 25;
+    const yOffSet = 196;
+
     let x = 170.32499;
     let y = isCircle ? 94.8975 : 67.0;
 
     switch(squareNum) {
         case 2:
             x *= 2;
-            x += 25;
+            x += xOffSet;
             break;
         case 3:
             x *= 3;
-            x += 50;
+            x += xOffSet * 2;
             break;
         case 4:
-            y += 196;
+            y += yOffSet;
             break;
         case 5:
             x *= 2;
-            x += 25;
-            y += 196;
+            x += xOffSet;
+            y += yOffSet;
             break;
         case 6:
             x *= 3;
-            x += 50;
-            y += 196;
+            x += xOffSet * 2;
+            y += yOffSet;
             break;
         case 7: 
-            y += 196 * 2;
+            y += yOffSet * 2;
             break;
         case 8:
             x *= 2;
-            x += 25;
-            y += 196 * 2;
+            x += xOffSet;
+            y += yOffSet * 2;
             break;
         case 9:
             x *= 3;
-            x += 50;
-            y += 196 * 2;
+            x += xOffSet * 2;
+            y += yOffSet * 2;
         break;
         default:
             break;
