@@ -1,6 +1,7 @@
 const markedCircles = new Set([1, 6]);
 const markedCrosses = new Set([7, 9]);
 let circleTurn = true;
+let gameOver = false;
 
 function setUpGame() {
     for (var circle of markedCircles) {
@@ -93,15 +94,54 @@ function markSquare(fillCircle, squareNum) {
     }
 
     square.parentNode.replaceChild(newMark, square);
-    circleTurn = !circleTurn;
-    for (let i = 1; i <= 9; i++) {
-        if (!markedCircles.has(i) && !markedCrosses.has(i)) {
-            let ghostMark = document.getElementById("square_" + i.toString());
-            ghostMark.setAttribute('d', circleTurn ? getCirclePath(i) : getCrossPath(i));
-            ghostMark.setAttribute('class', circleTurn ? 'tictactoe-square circleMark' : 'tictactoe-square crossMark');
+
+    if (!checkVictory(circleTurn ? markedCircles : markedCrosses)) {
+        circleTurn = !circleTurn;
+        for (let i = 1; i <= 9; i++) {
+            if (!markedCircles.has(i) && !markedCrosses.has(i)) {
+                let ghostMark = document.getElementById("square_" + i.toString());
+                ghostMark.setAttribute('d', circleTurn ? getCirclePath(i) : getCrossPath(i));
+                ghostMark.setAttribute('class', circleTurn ? 'tictactoe-square circleMark' : 'tictactoe-square crossMark');
+            }
         }
+    } else {
+        let ghostMarks = document.querySelectorAll('.tictactoe-square');
+
+        // Loop through the NodeList and remove each element
+        ghostMarks.forEach(element => {
+            element.parentNode.removeChild(element);
+        });
     }
 }
 
+function checkVictory(marks) {
+    let marksValues = Array.from(marks);
+    if ([1, 2 ,3].every((value) => marksValues.includes(value))) {
+        setRow(1);
+        return true;
+    } else if ([4,5,6].every((value) => marksValues.includes(value))) {
+        setRow(2);
+        return true;
+    } else if ([7,8,9].every((value) => marksValues.includes(value))) {
+        setRow(3);
+        return true;
+    }
+    return false;
+}
 
-//<path class="tictactoe-square" stroke="none" fill="currentColor" id="square_9" onclick="markSquare(circleTurn, 9);"
+function setRow(rowNum) {
+    let victoryRow = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    victoryRow.setAttribute('transform', 'rotate(-90 422.5 184)');
+    victoryRow.setAttribute('id', 'victory_bar');
+    victoryRow.setAttribute('stroke', "#000");
+    victoryRow.setAttribute('fill', 'currentColor');
+    victoryRow.setAttribute('height', '550');
+    victoryRow.setAttribute('width', '25');
+    victoryRow.setAttribute('y', '-87');
+
+    victoryRow.setAttribute('x', 500 - ((rowNum - 1) * 200));
+
+    document.getElementById('marksGroup').appendChild(victoryRow);
+}
+
+//<rect transform="rotate(-90 422.5 184)" id="victory_bar" height="550" width="25" y="-87" x="500" stroke="#000" fill="currentColor"/>
