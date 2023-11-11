@@ -32,10 +32,17 @@
 }
 
 .tictactoe-square:hover {
-    color: #007fff;
     opacity: 0.5;
     cursor: pointer;
     /* display: inherit; */
+}
+
+.circleMark:hover {
+    color: #007fff;
+}
+
+.crossMark:hover {
+    color: #FF5555;
 }
 
 #user1Emoji, #user2Emoji {

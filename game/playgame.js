@@ -94,4 +94,14 @@ function markSquare(fillCircle, squareNum) {
 
     square.parentNode.replaceChild(newMark, square);
     circleTurn = !circleTurn;
+    for (let i = 1; i <= 9; i++) {
+        if (!markedCircles.has(i) && !markedCrosses.has(i)) {
+            let ghostMark = document.getElementById("square_" + i.toString());
+            ghostMark.setAttribute('d', circleTurn ? getCirclePath(i) : getCrossPath(i));
+            ghostMark.setAttribute('class', circleTurn ? 'tictactoe-square circleMark' : 'tictactoe-square crossMark');
+        }
+    }
 }
+
+
+//<path class="tictactoe-square" stroke="none" fill="currentColor" id="square_9" onclick="markSquare(circleTurn, 9);"
