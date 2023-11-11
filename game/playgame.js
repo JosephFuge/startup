@@ -1,5 +1,5 @@
-const markedCircles = new Set([1, 6]);
-const markedCrosses = new Set([7, 9]);
+const markedCircles = new Set([]);
+const markedCrosses = new Set([9]);
 let circleTurn = true;
 let gameOver = false;
 
@@ -125,23 +125,82 @@ function checkVictory(marks) {
     } else if ([7,8,9].every((value) => marksValues.includes(value))) {
         setRow(3);
         return true;
+    } else if ([1,4,7].every((value) => marksValues.includes(value))) {
+        setCol(1);
+        return true;
+    } else if ([2,5,8].every((value) => marksValues.includes(value))) {
+        setCol(2);
+        return true;
+    } else if ([3,6,9].every((value) => marksValues.includes(value))) {
+        setCol(3);
+        return true;
+    } else if ([1,5,9].every((value) => marksValues.includes(value))) {
+        setDiagonal(true);
+        return true;
+    } else if ([3,5,7].every((value) => marksValues.includes(value))) {
+        setDiagonal(false);
+        return true;
     }
     return false;
 }
 
 function setRow(rowNum) {
+    // Set default bar attributes
     let victoryRow = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     victoryRow.setAttribute('transform', 'rotate(-90 422.5 184)');
-    victoryRow.setAttribute('id', 'victory_bar');
-    victoryRow.setAttribute('stroke', "#000");
-    victoryRow.setAttribute('fill', 'currentColor');
-    victoryRow.setAttribute('height', '550');
-    victoryRow.setAttribute('width', '25');
+    setDefaultBarAttributes(victoryRow);
     victoryRow.setAttribute('y', '-87');
 
+    // Change position based on which row it is
     victoryRow.setAttribute('x', 500 - ((rowNum - 1) * 200));
 
+    // Add row to so it appears on tap of all other marks and bars
     document.getElementById('marksGroup').appendChild(victoryRow);
 }
+
+function setCol(colNum) {
+    // Set default bar attributes
+    let victoryCol = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    setDefaultBarAttributes(victoryCol);
+    victoryCol.setAttribute('y', '18');
+
+    // Change position based on which column it is
+    victoryCol.setAttribute('x', 220 + ((colNum - 1) * 196));
+
+    // Add column to so it appears on tap of all other marks and bars
+    document.getElementById('marksGroup').appendChild(victoryCol);
+}
+
+function setDiagonal(topLeftToBotRight) {
+    let victoryDiag = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    setDefaultBarAttributes(victoryDiag);
+    victoryDiag.setAttribute('height', '660');
+
+    if (topLeftToBotRight) {
+        // topLeftToBotRight:
+    // <rect transform="rotate(-45 422.5 184)" id="svg_3" height="660" width="37" y="-60" x="335" stroke="#000" fill="currentColor"/>
+        victoryDiag.setAttribute('transform', 'rotate(-45 422.5 184)');
+        victoryDiag.setAttribute('y', '-60');
+        victoryDiag.setAttribute('x', '335');
+    } else {
+        // botLeftToTopRight: 
+        // <rect transform="rotate(45 422.5 184)" id="svg_3" height="660" width="37" y="-75" x="490" stroke="#000" fill="currentColor"/>
+        victoryDiag.setAttribute('transform', 'rotate(45 422.5 184)');
+        victoryDiag.setAttribute('y', '-75');
+        victoryDiag.setAttribute('x', '490');
+    }
+
+    // Add diagonal to so it appears on tap of all other marks and bars
+    document.getElementById('marksGroup').appendChild(victoryDiag);
+}
+
+function setDefaultBarAttributes(barElement) {
+    barElement.setAttribute('id', 'victory_bar');
+    barElement.setAttribute('stroke', "#000");
+    barElement.setAttribute('fill', 'currentColor');
+    barElement.setAttribute('height', '550');
+    barElement.setAttribute('width', '25');
+}
+
 
 //<rect transform="rotate(-90 422.5 184)" id="victory_bar" height="550" width="25" y="-87" x="500" stroke="#000" fill="currentColor"/>
