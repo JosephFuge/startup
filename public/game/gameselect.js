@@ -1,6 +1,6 @@
 
-function displayGames() {
-    const games = getUserGames();
+async function displayGames() {
+    const games = await getUserGames();
     console.log(games);
 
     let dynamicBody = "<h2>Select a Game</h2>";

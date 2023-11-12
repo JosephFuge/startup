@@ -1,15 +1,25 @@
 const markedCircles = new Set([]);
-const markedCrosses = new Set([9]);
+const markedCrosses = new Set([]);
 let circleTurn = true;
 let gameOver = false;
 
-function setUpGame() {
+async function setUpGame() {
+    let game = await fetchSpecificGame(1);
+
+    for (let i = 0; i < game.gameList[0].length; i++) {
+        if (game.gameList[0][i] === 'o') {
+            markedCircles.add(i + 1);
+        } else if (game.gameList[0][i] === 'x') {
+            markedCrosses.add(i + 1);
+        }
+    }
+
     for (var circle of markedCircles) {
-        markSquare(true, circle);
+        markSquare(true, circle, false);
     }
 
     for (var cross of markedCrosses) {
-        markSquare(false, cross);
+        markSquare(false, cross, false);
     }
 }
 
@@ -79,7 +89,7 @@ function getCrossPath(squareNum) {
     return 'm' + getXandY(false, squareNum) + 'l31.27592,-31.27592l33.22392,33.22365l33.22392,-33.22365l31.27621,31.27592l-33.22393,33.22392l33.22393,33.22392l-31.27621,31.27621l-33.22392,-33.22393l-33.22392,33.22393l-31.27592,-31.27621l33.22365,-33.22392l-33.22365,-33.22392z';
 }
 
-function markSquare(fillCircle, squareNum) {
+function markSquare(fillCircle, squareNum, updateServer) {
     const square = document.getElementById('square_' + squareNum);
     let newMark = document.createElementNS("http://www.w3.org/2000/svg", "path");
     newMark.setAttribute('stroke', '#000');
@@ -94,6 +104,10 @@ function markSquare(fillCircle, squareNum) {
     }
 
     square.parentNode.replaceChild(newMark, square);
+
+    if (updateServer) {
+        updateGame(1, circleTurn ? 'o' : 'x', {layer1: squareNum, layer2: -1});
+    }
 
     if (!checkVictory(circleTurn ? markedCircles : markedCrosses)) {
         circleTurn = !circleTurn;

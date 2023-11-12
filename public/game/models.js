@@ -8,7 +8,7 @@ class GameData {
     * user1 should be the username of user1 (could be logged in user or opponent)
     * user2 should be the username of user2 (could be logged in user or opponent)
     * userTurn should be 1 or 2, indicating which user's turn it is */
-    constructor(gameList, user1, user2, userTurn) {
+    constructor(id, gameList, user1, user2, userTurn) {
         // this.topLeft = gameList[0][0];
         // this.topMiddle = gameList[0][1];
         // this.topRight = gameList[0][2];
@@ -20,6 +20,8 @@ class GameData {
         // this.bottomLeft = gameList[2][0];
         // this.bottomMiddle = gameList[2][1];
         // this.bottomRight = gameList[2][2];
+
+        this.id = id;
 
         this.gameList = gameList;
 

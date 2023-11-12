@@ -85,3 +85,18 @@ During this deliverable I built out the styling of my Recursive TicTacToe startu
 **Future Websocket Support:** websocketAccess.js file contains a getUserEmoji function that will retrieve realtime emoji updates in the future. It also contains a sendUserEmoji function that will send realtime emoji updates in the future.
 
 **Interaction Logic:** Game cards fill dynamically with database data. User can mark squares on the play game screen. TicTacToe board is marked with a bar when three circles or three x's are in a row, and new squares can't be marked. User can create new games on the create game page.
+
+
+## Web Service Deliverable
+
+During this deliverable I converted my static website into a RESTful web server with Node.js and Express
+
+**HTTP Service using Node.js and Express:** Web content is served up by a Node.js server with Express routing, including static and json API responses
+
+**Express static middleware:** See above
+
+**Third party service endpoint:** About page has a different shiro dog image every time you load it
+
+**Your backend provides service endpoints:** Updating and reading tictactoe game data uses server endpoints
+
+**Your frontend calls your service endpoints:** Taking action such as creating games and playing them calls server endpoints
