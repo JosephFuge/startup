@@ -88,8 +88,10 @@ apiRouter.post('/updateGame', (req, res) => {
                     } else {
                         game.gameData[position['layer1']][position['layer2']] = mark;
                     }
+                    break;
                 }
             }
+            res.status(200).json({message: 'Game updated successfully'});
         } else {
             res.status(400).json({message: 'Bad mark or square position'});
         }
@@ -105,7 +107,17 @@ app.use((_req, res) => {
 
 // Send data for specific game
 apiRouter.post('/fetchGame', (req, res) => {
-    
+    const gameId = req.body['gameId'];
+    if (gameId && Array.from(gamesData.map((game) => game.id)).includes(gameId)) {
+        for (game of gamesData) {
+            if (game.id === gameId) {
+                res.status(200).send(game);
+                break;
+            }
+        }
+    } else {
+        res.status(400).json({message: 'Game doesn\'t exist'});
+    }
 });
 
 app.listen(PORT_NUM, () => console.log(`Server is listening on port ${PORT_NUM}`));
