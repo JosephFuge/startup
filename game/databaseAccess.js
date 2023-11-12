@@ -51,6 +51,8 @@ function getUserGames() {
 }
 
 function saveNewGame(newGameData) {
+    // Save a newly created game.
+    // TODO: Save to database instead of localStorage. 
     let newGames = [newGameData];
     const currentGames = JSON.parse(localStorage.getItem("localGames"));
     if (currentGames) {
