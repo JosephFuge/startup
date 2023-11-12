@@ -80,8 +80,8 @@ During this deliverable I built out the styling of my Recursive TicTacToe startu
 
 **Future Login Support:** User can type their name in and click login, which will store their name to LocalStorage and display it in headers throughout the website
 
-**Future Database Data Support:** databaseAccess.js file contains a getUserGames() function to retrieve user games in the future. This file will also be the home of any other future reads and writes to/from the database.
+**Future Database Data Support:** databaseAccess.js file contains a getUserGames() function to retrieve user games in the future. It also contains a saveNewGame() function to save user games in the future. This file will also be the home of any other future reads and writes to/from the database. 
 
-**Future Websocket Support:** websocketAccess.js file contains a getUserEmoji function that will retrieve realtime emoji updates in the future.
+**Future Websocket Support:** websocketAccess.js file contains a getUserEmoji function that will retrieve realtime emoji updates in the future. It also contains a sendUserEmoji function that will send realtime emoji updates in the future.
 
-**Interaction Logic:** Game cards fill dynamically with database data. User clicking to mark square is close to done.
+**Interaction Logic:** Game cards fill dynamically with database data. User can mark squares on the play game screen. TicTacToe board is marked with a bar when three circles or three x's are in a row, and new squares can't be marked. User can create new games on the create game page.
