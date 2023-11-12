@@ -13,7 +13,7 @@ const EMPTY_GAME = [
 
 // Mock game data
 const gamesData =  [{user1: 'Joseph', user2: "Jennifer", userTurn: 1, id: 1, gameData: [
-    ['x', '', '', '', 'x', '', 'o', '', ''], 
+    ['x', '', '', '', 'x', '', 'o', 'o', ''], 
     ['x', '', 'o', '', 'x', '', 'o', '', 'x'],
     ['o', '', '', '', 'x', '', 'o', '', ''],
     ['x', '', '', '', 'x', '', 'o', '', ''],
@@ -74,6 +74,10 @@ apiRouter.post('/createGame', (req, res) => {
 });
 
 // Update a game with new moves
+// Expecting:
+    // gameId - number
+    // mark - string, 'o' or 'x'
+    // position - {layer1: number, layer2: number}
 apiRouter.post('/updateGame', (req, res) => {
     const gameId = req.body['gameId'];
     if (gameId && Array.from(gamesData.map((game) => game.id)).includes(gameId)) {
@@ -86,7 +90,7 @@ apiRouter.post('/updateGame', (req, res) => {
                     if (position['layer2'] === -1) {
                         game.gameData[0][position['layer1']] = mark;
                     } else {
-                        game.gameData[position['layer1']][position['layer2']] = mark;
+                        game.gameData[position['layer1'] + 1][position['layer2'] + 1] = mark;
                     }
                     break;
                 }
