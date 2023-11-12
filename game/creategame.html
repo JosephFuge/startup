@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/main.css">
     <link rel="stylesheet" type="text/css" href="/game/creategame.css">
+    <script type="text/javascript" src="/game/models.js"></script>
     <script type="text/javascript" src="/services.js"></script>
+    <script type="text/javascript" src="/game/databaseAccess.js"></script>
+    <script type="text/javascript" src="/game/creategame.js"></script>
     <title>Recursive TicTacToe - Create Game</title>
 </head>
 <body onload="setName();">
@@ -49,7 +52,7 @@
                 <option>2 layers</option>
             </select>
             <br>
-            <input class="rounded-button" type="submit" id="createButton" formaction="/game/gameselect.html" value="Send Game Request">
+            <input class="rounded-button" type="button" id="createButton" onclick="newGame();" value="Send Game Request">
         </form>
     </div>
     <br>
