@@ -12,7 +12,7 @@ const EMPTY_GAME = [
     ['', '', '', '', '', '', '', '', '']];
 
 // Mock game data
-const gamesData =  [{user1: currentUser, user2: "Jennifer", userTurn: 1, id: 1, gameData: [
+const gamesData =  [{user1: 'Joseph', user2: "Jennifer", userTurn: 1, id: 1, gameData: [
     ['x', '', '', '', 'x', '', 'o', '', ''], 
     ['x', '', 'o', '', 'x', '', 'o', '', 'x'],
     ['o', '', '', '', 'x', '', 'o', '', ''],
@@ -21,7 +21,7 @@ const gamesData =  [{user1: currentUser, user2: "Jennifer", userTurn: 1, id: 1, 
     ['x', '', 'o', '', '', 'x', 'o', '', ''],
     ['o', '', '', 'x', '', '', '', '', 'o'],
     ['', '', '', '', '', '', '', '', ''],
-    ['', 'o', '', '', 'x', '', '', '', '']]}, {user1: "Marcos", user2: currentUser, userTurn: 1, id: 2, gameData: [
+    ['', 'o', '', '', 'x', '', '', '', '']]}, {user1: "Marcos", user2: 'Joseph', userTurn: 1, id: 2, gameData: [
     ['', '', '', '', 'x', '', '', '', ''], 
     ['', '', '', '', '', '', '', '', ''],
     ['', '', '', '', '', '', '', '', ''],
@@ -32,7 +32,7 @@ const gamesData =  [{user1: currentUser, user2: "Jennifer", userTurn: 1, id: 1, 
     ['', '', '', '', '', '', '', '', ''],
     ['', '', '', '', '', '', '', '', '']]},
     // A userTurn of 0 means the game has not been started yet because it hasn't been accepted by the other user
-    {user1: currentUser, user2: "Ronald", userTurn: 0, id: 3, gameData: EMPTY_GAME}
+    {user1: 'Joseph', user2: "Ronald", userTurn: 0, id: 3, gameData: EMPTY_GAME}
     ];
 
 
@@ -53,10 +53,10 @@ app.use(`/api`, apiRouter);
 // Send games for a particular user
 apiRouter.post('/fetchGames', (req, res) => {
     const requestingUser = req.body['user'];
-    let usergames = [];
+    let userGames = [];
     for (game of gamesData) {
-        if (game[user1] === requestingUser || game[user2] === requestingUser) {
-            usergames.push(game);
+        if (game['user1'] === requestingUser || game['user2'] === requestingUser) {
+            userGames.push(game);
         }
     }
     res.send(userGames);

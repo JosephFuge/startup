@@ -1,19 +1,23 @@
-function getUserGames() {
+async function getUserGames() {
     // TODO: In future updates, pull game data from database and not from constants
     const currentUser = localStorage.getItem("username");
-
     
-    
-    const storedGames = JSON.parse(localStorage.getItem("games"));
+    const storedGames = JSON.parse(localStorage.getItem("localGames"));
     console.log('storedGames: ' + storedGames);
 
-    let games = [new GameData(userGameData1.gameData, userGameData1.user1, userGameData1.user2, userGameData1.userTurn), 
-        new GameData(userGameData2.gameData, userGameData2.user2, userGameData2.user2, userGameData2.userTurn),
-        new GameData(userGameData3.gameData, userGameData3.user2, userGameData3.user2, userGameData3.userTurn)];
+    let gamesResponse = await fetch('/api/fetchGames', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify({user: currentUser}),
+      });
+
+    let games = await gamesResponse.json();
 
     if (storedGames) {
         games = games.concat(storedGames);
     }
+
+    games = Array.from(games.map((tempGame) => new GameData(tempGame['id'], tempGame['gameData'], tempGame['user1'], tempGame['user2'], tempGame['userTurn'])));
 
     return games;
 }
