@@ -7,13 +7,15 @@ function displayGames() {
 
     const currentUser = localStorage.getItem("username");
     for (let currentGame of games) {
-        if ((currentUser === currentGame.user1 && currentGame.turn === 2) || (currentUser === currentGame.user2 && currentGame.turn === 1)) {
+        if ((currentUser === currentGame.user1 && currentGame.turn === 2) || (currentUser === currentGame.user2 && currentGame.turn === 1) || (currentUser === currentGame.user1 && currentGame.turn === 0)) {
             dynamicBody += '<div class="async-game">\
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">\
                 <path fill="#FFFFFF" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 12v-6h-2v8h7v-2h-5z"/>\
             </svg>\
             <h3>Waiting for Opponent...</h3>\
-            <p>Game with: Juancito Sanchez</p>\
+            <p>Game with: ';
+            dynamicBody += currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1;
+            dynamicBody += '</p>\
         </div><br>';
         } else if ((currentUser === currentGame.user1 && currentGame.turn === 1) || (currentUser === currentGame.user2 && currentGame.turn === 2)) {
             dynamicBody += '<a href="/game/playgame.html">\
@@ -36,7 +38,9 @@ function displayGames() {
                     </g>\
                 </svg>\
                 <h3>Your turn!</h3>\
-                <p>Game with: Johnathan Fredrick</p>\
+                <p>Game with: ';
+                dynamicBody += currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1;
+                dynamicBody += ' </p>\
         </div></a><br>';
         } else {
             dynamicBody += '\
@@ -62,7 +66,9 @@ function displayGames() {
                     <a class="rounded-button" id="acceptRequest"><input type="submit" value="Accept"></a>\
                     <a class="rounded-button" id="rejectRequest"><input type="submit" value="Reject"></a>\
                 </span>\
-                <p>Request from: Marissa Smart</p>\
+                <p>Request from: ';
+                dynamicBody += currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1;
+                dynamicBody += '</p>\
             </div>\
             <br>\
             ';
