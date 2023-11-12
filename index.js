@@ -75,9 +75,21 @@ apiRouter.post('/createGame', (req, res) => {
 
 // Update a game with new moves
 apiRouter.post('/updateGame', (req, res) => {
-    if (req.body['gameId']) {
-        if (req.body['mark'] && req.body['position']) {
-            
+    const gameId = req.body['gameId'];
+    if (gameId && Array.from(gamesData.map((game) => game.id)).includes(gameId)) {
+        if (req.body['mark'] && (req.body['mark'] === 'o' || req.body['mark'] === 'x') && req.body['position']) {
+            const mark = req.body['mark'];
+            // position is expected to be a map with the first game layer and second game layer grid numbers 
+            const position = req.body['position'];
+            for (game of gamesData) {
+                if (game.id === gameId) {
+                    if (position['layer2'] === -1) {
+                        game.gameData[0][position['layer1']] = mark;
+                    } else {
+                        game.gameData[position['layer1']][position['layer2']] = mark;
+                    }
+                }
+            }
         } else {
             res.status(400).json({message: 'Bad mark or square position'});
         }
@@ -93,7 +105,7 @@ app.use((_req, res) => {
 
 // Send data for specific game
 apiRouter.post('/fetchGame', (req, res) => {
-
+    
 });
 
 app.listen(PORT_NUM, () => console.log(`Server is listening on port ${PORT_NUM}`));
