@@ -6,3 +6,8 @@ function getEmojiReaction() {
 
     return sadEmoji;
 }
+
+function sendEmojiReaction(emoji) {
+    // TODO: Send emoji reaction
+
+}
