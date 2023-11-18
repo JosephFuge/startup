@@ -25,9 +25,10 @@ async function getUserGames() {
 async function saveNewGame(newGameData) {
     // Save a newly created game.
     let newGames = [newGameData];
-    const currentGames = JSON.parse(localStorage.getItem("localGames"));
-    if (currentGames) {
-        newGames = newGames.concat(currentGames);
+    let currentGames = localStorage.getItem("localGames");
+    const currentGamesObj = JSON.parse();
+    if (currentGames && currentGamesObj) {
+        newGames = newGames.concat(currentGamesObj);
     }
     localStorage.setItem("localGames", JSON.stringify(newGames));
     fetch('/api/createGame', {
