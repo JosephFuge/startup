@@ -63,8 +63,8 @@ async function displayGames() {
                 </svg>\
                 <h3>New Game Request</h3>\
                 <span>\
-                    <a class="rounded-button" id="acceptRequest"><input type="submit" value="Accept"></a>\
-                    <a class="rounded-button" id="rejectRequest"><input type="submit" value="Reject"></a>\
+                    <button class="rounded-button" onclick="acceptOrRejectGame(true, \'' + currentGame.id + '\');" id="acceptRequest">Accept</button>\
+                    <button class="rounded-button" onclick="acceptOrRejectGame(false, \'' + currentGame.id + '\');">Reject</button>\
                 </span>\
                 <p>Request from: ';
                 dynamicBody += currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1;

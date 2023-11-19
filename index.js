@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const config = require('./dbConfig.json');
 url = `mongodb+srv://${config.userName}:${config.password}@${config.cluster}.${config.hostname}`;
 const PORT_NUM = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -148,10 +148,36 @@ apiRouter.post('/fetchGame', (req, res) => {
     const gameId = req.body['gameId'];
     const gamesCollection = client.db('tictactoe').collection('games');
 
-    const cursor = gamesCollection.find({_id: ObjectId(gameId)});
+    const cursor = gamesCollection.find({_id: new ObjectId(gameId)});
 
     if (cursor.toArray().length > 0) {
         res.status(200).send(cursor.toArray()[0]);
+    } else {
+        res.status(400).json({message: 'Game doesn\'t exist'});
+    }
+});
+
+apiRouter.post('/acceptGame', async (req, res) => {
+    const gameId = req.body['gameId'];
+    const gamesCollection = client.db('tictactoe').collection('games');
+
+    const result = await gamesCollection.updateOne({_id: new ObjectId(gameId)}, {$set: {userTurn: 2}});
+
+    if (result.matchedCount && result.modifiedCount) {
+        res.status(200).json({message: "Success"});
+    } else {
+        res.status(400).json({message: 'Game doesn\'t exist'});
+    }
+});
+
+apiRouter.post('/rejectGame', async (req, res) => {
+    const gameId = req.body['gameId'];
+    const gamesCollection = client.db('tictactoe').collection('games');
+
+    const result = await gamesCollection.deleteOne({_id: new ObjectId(gameId)});
+
+    if (result.deletedCount === 1) {
+        res.status(200).json({message: "Success"});
     } else {
         res.status(400).json({message: 'Game doesn\'t exist'});
     }

@@ -50,6 +50,22 @@ function updateGame(gameId, mark, position) {
       });
 }
 
+function acceptOrRejectGame(isAccept, gameId) {
+    if (isAccept) {
+        fetch('/api/acceptGame', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({gameId: gameId}),
+          });
+    } else {
+        fetch('/api/rejectGame', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({gameId: gameId}),
+          });
+    }
+}
+
 async function fetchSpecificGame(gameId) {
     let gameResponse = await fetch('/api/fetchGame', {
         method: 'POST',
