@@ -13,7 +13,7 @@ const EMPTY_GAME = [
 
 // Mock game data
 const gamesData =  [{user1: 'Joseph', user2: "Jennifer", userTurn: 1, id: 1, gameData: [
-    ['x', '', '', '', 'x', '', 'o', 'o', ''], 
+    ['', '', '', '', 'x', '', 'o', 'o', ''], 
     ['x', '', 'o', '', 'x', '', 'o', '', 'x'],
     ['o', '', '', '', 'x', '', 'o', '', ''],
     ['x', '', '', '', 'x', '', 'o', '', ''],
@@ -88,7 +88,7 @@ apiRouter.post('/updateGame', (req, res) => {
             for (game of gamesData) {
                 if (game.id === gameId) {
                     if (position['layer2'] === -1) {
-                        game.gameData[0][position['layer1']] = mark;
+                        game.gameData[0][position['layer1'] - 1] = mark;
                     } else {
                         game.gameData[position['layer1'] + 1][position['layer2'] + 1] = mark;
                     }
@@ -123,5 +123,23 @@ apiRouter.post('/fetchGame', (req, res) => {
         res.status(400).json({message: 'Game doesn\'t exist'});
     }
 });
+
+function getGameDataFormatted(gameData) {
+    let output = 'Board 0\n';
+    for (let i = 0; i < 1; i++) {
+        for (let j = 0; j < gameData[i].length; j++) {
+            if (gameData[i][j].length > 0 && (gameData[i][j] === 'x' || gameData[i][j] === 'o')) {
+                output += gameData[i][j];
+            } else {
+                output += '_';
+            }
+            if (j % 3 == 0) {
+                output += '\n';
+            }
+        }
+        output += '\nBoard ' + (i + 1) + '\n';
+    }
+    return output;
+}
 
 app.listen(PORT_NUM, () => console.log(`Server is listening on port ${PORT_NUM}`));
