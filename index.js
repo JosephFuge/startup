@@ -144,14 +144,17 @@ app.use((_req, res) => {
 });
 
 // Send data for specific game
-apiRouter.post('/fetchGame', (req, res) => {
+apiRouter.post('/fetchGame', async (req, res) => {
     const gameId = req.body['gameId'];
     const gamesCollection = client.db('tictactoe').collection('games');
 
     const cursor = gamesCollection.find({_id: new ObjectId(gameId)});
 
-    if (cursor.toArray().length > 0) {
-        res.status(200).send(cursor.toArray()[0]);
+    const resultArray = await cursor.toArray();
+
+    if (resultArray.length > 0) {
+
+        res.status(200).send(resultArray[0]);
     } else {
         res.status(400).json({message: 'Game doesn\'t exist'});
     }

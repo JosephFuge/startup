@@ -3,35 +3,41 @@ const markedCrosses = new Set([]);
 let circleTurn = true;
 let gameOver = false;
 
+
 async function setUpGame() {
-    let game = await fetchSpecificGame(1);
+    const gameId = localStorage.getItem('currentGameId');
+    if (gameId) {
+        let game = await fetchSpecificGame(gameId);
 
-    const circlesToMark = new Set([]);
-    const crossesToMark = new Set([]);
-
-    for (let i = 0; i < game.gameList[0].length; i++) {
-        if (game.gameList[0][i] === 'o') {
-            circlesToMark.add(i + 1);
-        } else if (game.gameList[0][i] === 'x') {
-            crossesToMark.add(i + 1);
+        const circlesToMark = new Set([]);
+        const crossesToMark = new Set([]);
+    
+        for (let i = 0; i < game.gameList[0].length; i++) {
+            if (game.gameList[0][i] === 'o') {
+                circlesToMark.add(i + 1);
+            } else if (game.gameList[0][i] === 'x') {
+                crossesToMark.add(i + 1);
+            }
         }
-    }
-
-    for (var circle of circlesToMark) {
-        markSquare(true, circle, false);
-    }
-
-    for (var cross of crossesToMark) {
-        markSquare(false, cross, false);
-    }
-
-    if (checkVictory(markedCircles) || checkVictory(markedCrosses)) {
-        let ghostMarks = document.querySelectorAll('.tictactoe-square');
-
-        // Loop through the NodeList and remove each element
-        ghostMarks.forEach(element => {
-            element.parentNode.removeChild(element);
-        });
+    
+        for (var circle of circlesToMark) {
+            markSquare(true, circle, false);
+        }
+    
+        for (var cross of crossesToMark) {
+            markSquare(false, cross, false);
+        }
+    
+        if (checkVictory(markedCircles) || checkVictory(markedCrosses)) {
+            let ghostMarks = document.querySelectorAll('.tictactoe-square');
+    
+            // Loop through the NodeList and remove each element
+            ghostMarks.forEach(element => {
+                element.parentNode.removeChild(element);
+            });
+        }
+    } else {
+        window.location.href = "gameselect.html";
     }
 }
 
@@ -118,7 +124,8 @@ function markSquare(fillCircle, squareNum, updateServer) {
     square.parentNode.replaceChild(newMark, square);
 
     if (updateServer) {
-        updateGame(1, circleTurn ? 'o' : 'x', {layer1: squareNum, layer2: -1});
+        const gameId = localStorage.getItem('currentGameId');
+        updateGame(gameId, circleTurn ? 'o' : 'x', {layer1: squareNum, layer2: -1});
 
         if (!checkVictory(circleTurn ? markedCircles : markedCrosses)) {
             circleTurn = !circleTurn;

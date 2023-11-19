@@ -50,13 +50,18 @@ function updateGame(gameId, mark, position) {
       });
 }
 
-function acceptOrRejectGame(isAccept, gameId) {
+async function acceptOrRejectGame(isAccept, gameId) {
     if (isAccept) {
-        fetch('/api/acceptGame', {
+        const resultResponse = await fetch('/api/acceptGame', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({gameId: gameId}),
           });
+        const result = await resultResponse.json();
+        if (result['message'] === 'Success') {
+            localStorage.setItem('currentGameId', gameId);
+            window.location.href = "playgame.html";
+        }
     } else {
         fetch('/api/rejectGame', {
             method: 'POST',
