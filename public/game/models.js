@@ -32,13 +32,13 @@ class GameData {
     }
 
     // If the square to be marked is empty, mark it. If it is the next layer of the game, return that board.
-    markSquare(row, column, mark) {
-        if (typeof(mark) == 'string' && typeof(this.gameList[row][column]) == 'string' && this.gamelist[row][column] === '') {
-            this.gameList[row][column] = mark;
-        } else if (typeof(this.gameList[row][column] == 'object')) {
-            // return the corresponding GameData
-            return gameList[row][column];
-        }
-    }
+    // markSquare(row, column, mark) {
+    //     if (typeof(mark) == 'string' && typeof(this.gameList[row][column]) == 'string' && this.gamelist[row][column] === '') {
+    //         this.gameList[row][column] = mark;
+    //     } else if (typeof(this.gameList[row][column] == 'object')) {
+    //         // return the corresponding GameData
+    //         return gameList[row][column];
+    //     }
+    // }
 
 }
