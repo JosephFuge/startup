@@ -65,22 +65,42 @@ const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // Send games for a particular user
-apiRouter.post('/fetchGames', (req, res) => {
+apiRouter.post('/fetchGames', async (req, res) => {
     const requestingUser = req.body['user'];
-    let userGames = [];
-    for (game of gamesData) {
-        if (game['user1'] === requestingUser || game['user2'] === requestingUser) {
-            userGames.push(game);
-        }
-    }
-    res.send(userGames);
+    // let userGames = [];
+    // for (game of gamesData) {
+    //     if (game['user1'] === requestingUser || game['user2'] === requestingUser) {
+    //         userGames.push(game);
+    //     }
+    // }
+
+    /*
+    const gamesData: {
+        user1: string;
+        user2: string;
+        userTurn: number;
+        id: number;
+        gameData: string[][];
+    }[]
+    */
+
+    const gamesCollection = client.db('tictactoe').collection('games');
+
+    const query = {$or: [
+            {user1: requestingUser},
+            {user2: requestingUser}
+        ]};
+    const options = {limit: 10,};
+    const cursor = gamesCollection.find(query, options);
+    const resultGames = await cursor.toArray();
+    res.send(resultGames);
 });
 
 // Create new game
 apiRouter.post('/createGame', (req, res) => {
     if (req.body['requestingUser'] && req.body['opponentUser']) {
-        let maxId = gamesData.reduce((maxIdGame, newIdGame) => Math.max(maxIdGame.id, newIdGame.id)).id;
-        gamesData.push({user1: req.body['requestingUser'], user2: req.body['opponentUser'], id: maxId + 1, gameData: EMPTY_GAME});
+        const gamesCollection = client.db('tictactoe').collection('games');
+        gamesCollection.insertOne({user1: req.body['requestingUser'], user2: req.body['opponentUser'], gameData: EMPTY_GAME, userTurn: 0});
         res.status(201).json({message: 'Success'});
     } else {
         res.status(400).json({message: 'Requesting user or opponent user doesn\'t exist'});
@@ -126,13 +146,12 @@ app.use((_req, res) => {
 // Send data for specific game
 apiRouter.post('/fetchGame', (req, res) => {
     const gameId = req.body['gameId'];
-    if (gameId && Array.from(gamesData.map((game) => game.id)).includes(gameId)) {
-        for (game of gamesData) {
-            if (game.id === gameId) {
-                res.status(200).send(game);
-                break;
-            }
-        }
+    const gamesCollection = client.db('tictactoe').collection('games');
+
+    const cursor = gamesCollection.find({_id: ObjectId(gameId)});
+
+    if (cursor.toArray().length > 0) {
+        res.status(200).send(cursor.toArray()[0]);
     } else {
         res.status(400).json({message: 'Game doesn\'t exist'});
     }
