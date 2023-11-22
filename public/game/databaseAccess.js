@@ -17,19 +17,24 @@ async function getUserGames() {
     //     games = games.concat(storedGames);
     // }
 
-    games = Array.from(games.map((tempGame) => new GameData(tempGame['id'], tempGame['gameData'], tempGame['user1'], tempGame['user2'], tempGame['userTurn'])));
+    if (games.length > 0) {
+        games = Array.from(games.map((tempGame) => new GameData(tempGame['_id'], tempGame['gameData'], tempGame['user1'], tempGame['user2'], tempGame['userTurn'])));
 
-    return games;
+        return games;
+    } else {
+        return [];
+    }
 }
 
 async function saveNewGame(newGameData) {
     // Save a newly created game.
-    let newGames = [newGameData];
-    const currentGames = JSON.parse(localStorage.getItem("localGames"));
-    if (currentGames) {
-        newGames = newGames.concat(currentGames);
-    }
-    localStorage.setItem("localGames", JSON.stringify(newGames));
+    // let newGames = [newGameData];
+    // let currentGames = localStorage.getItem("localGames");
+    // const currentGamesObj = JSON.parse();
+    // if (currentGames && currentGamesObj) {
+    //     newGames = newGames.concat(currentGamesObj);
+    // }
+    // localStorage.setItem("localGames", JSON.stringify(newGames));
     fetch('/api/createGame', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
@@ -45,6 +50,27 @@ function updateGame(gameId, mark, position) {
       });
 }
 
+async function acceptOrRejectGame(isAccept, gameId) {
+    if (isAccept) {
+        const resultResponse = await fetch('/api/acceptGame', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({gameId: gameId}),
+          });
+        const result = await resultResponse.json();
+        if (result['message'] === 'Success') {
+            localStorage.setItem('currentGameId', gameId);
+            window.location.href = "playgame.html";
+        }
+    } else {
+        fetch('/api/rejectGame', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({gameId: gameId}),
+          });
+    }
+}
+
 async function fetchSpecificGame(gameId) {
     let gameResponse = await fetch('/api/fetchGame', {
         method: 'POST',
@@ -52,5 +78,5 @@ async function fetchSpecificGame(gameId) {
         body: JSON.stringify({gameId: gameId}),
     });
     let game = await gameResponse.json();
-    return new GameData(game['id'], game['gameData'], game['user1'], game['user2'], game['userTurn']);
+    return new GameData(game['_id'], game['gameData'], game['user1'], game['user2'], game['userTurn']);
 }

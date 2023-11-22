@@ -18,8 +18,8 @@ async function displayGames() {
             dynamicBody += '</p>\
         </div><br>';
         } else if ((currentUser === currentGame.user1 && currentGame.turn === 1) || (currentUser === currentGame.user2 && currentGame.turn === 2)) {
-            dynamicBody += '<a href="/game/playgame.html">\
-            <div class="async-game play-game">\
+            dynamicBody += '<button class="async-game play-game" onclick="localStorage.setItem(\'currentGameId\', \'' + currentGame.id + '\');window.location.href = \'playgame.html\';">\
+            <div>\
                 <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">\
                     <g>\
                     <rect id="svg_1" height="518" width="37" y="36" x="305" stroke="#000" fill="#FFFFFF"/>\
@@ -41,7 +41,7 @@ async function displayGames() {
                 <p>Game with: ';
                 dynamicBody += currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1;
                 dynamicBody += ' </p>\
-        </div></a><br>';
+        </div></button><br>';
         } else {
             dynamicBody += '\
             <div class="async-game">\
@@ -63,8 +63,8 @@ async function displayGames() {
                 </svg>\
                 <h3>New Game Request</h3>\
                 <span>\
-                    <a class="rounded-button" id="acceptRequest"><input type="submit" value="Accept"></a>\
-                    <a class="rounded-button" id="rejectRequest"><input type="submit" value="Reject"></a>\
+                    <button class="rounded-button" onclick="acceptOrRejectGame(true, \'' + currentGame.id + '\');" id="acceptRequest">Accept</button>\
+                    <button class="rounded-button" onclick="acceptOrRejectGame(false, \'' + currentGame.id + '\');">Reject</button>\
                 </span>\
                 <p>Request from: ';
                 dynamicBody += currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1;

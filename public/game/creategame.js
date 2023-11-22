@@ -3,7 +3,7 @@ function newGame() {
     const opponentUsername = document.getElementById('opponentUsername').value;
     const currentUsername = localStorage.getItem("username");
 
-    saveNewGame(new GameData([
+    saveNewGame(new GameData(0, [
         ['', '', '', '', '', '', '', '', ''], 
         ['', '', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', '', ''],
