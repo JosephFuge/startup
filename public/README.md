@@ -100,3 +100,11 @@ During this deliverable I converted my static website into a RESTful web server 
 **Your backend provides service endpoints:** Updating and reading tictactoe game data uses server endpoints
 
 **Your frontend calls your service endpoints:** Taking action such as creating games and playing them calls server endpoints
+
+## Database Deliverable
+
+**MongoDB Atlas database created:** Created a MongoDB Atlas database and connected it using information stored in dbConfig.json (not committed in GitHub for security)
+
+**Provides backend endpoints for manipulating application data:** Users can create and play tictactoe games, which are uploaded  to the database by calling backend endpoints
+
+**Stores application data in MongoDB:** MongoDB stores the current state of games including which marks have been made and whose turn it is.
