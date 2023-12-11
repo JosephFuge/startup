@@ -52,7 +52,7 @@ apiRouter.post('/auth/create', async (req, res) => {
         setAuthCookie(res, user.token);
 
         res.send({
-        id: user._id,
+            id: user._id,
         });
     }
 });
@@ -71,10 +71,14 @@ app.post('/auth/login', async (req, res) => {
 
 app.get('/user/me', async (req, res) => {
     authToken = req.cookies['token'];
-    const user = await collection.findOne({ token: authToken });
-    if (user) {
-      res.send({ email: user.email });
-      return;
+    if (authToken) {
+        const user = ticDB.getUserByToken(authToken);
+        if (user) {
+            res.send({ email: user.email });
+            return;
+        }
+    } else {
+        res.status(400).send({msg: 'No authtoken received'});
     }
     res.status(401).send({ msg: 'Unauthorized' });
 });
@@ -133,7 +137,8 @@ apiRouter.post('/fetchGame', async (req, res) => {
     if (gameId) {
         const resultGame = await ticDB.getGame(gameId);
         if (resultGame) {
-            res.status(200).send(resultArray[0]);
+            res.status(200).send(resultGame);
+            return;
         }
     }
 

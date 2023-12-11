@@ -1,4 +1,5 @@
 const { MongoClient, ObjectId } = require('mongodb');
+const bcrypt = require('bcrypt');
 
 class DatabaseAccess {
 
@@ -17,17 +18,33 @@ class DatabaseAccess {
         });
     }
 
-    // getUser(email) {
-    //     return collection.findOne({ email: email });
-    // }
+    async getUser(email) {
+        const usersCollection = this.#db.collection('users');
+
+        return await usersCollection.findOne({ email: email });
+    }
+
+    async getUserByToken(authToken) {
+        const usersCollection = this.#db.collection('users');
+
+        return await usersCollection.findOne({authToken: authToken});
+    }
     
     async createUser(email, password) {
+        const usersCollection = this.#db.collection('users');
+
+        // Hash the password before we insert it into the database
+        const passwordHash = await bcrypt.hash(password, 10);
+
         const user = {
             email: email,
-            password: password,
-            token: 'xxx',
+            password: passwordHash,
+            token: uuid.v4(),
         };
-        return collection.insertOne(user);
+
+        await usersCollection.insertOne(user);
+
+        return user;
     }
 
     async getGames(requestingUser) {
@@ -54,8 +71,9 @@ class DatabaseAccess {
     }
 
     async createGame(requestingUser, opponentUser) {
-        const gamesCollection = client.db('tictactoe').collection('games');
-        gamesCollection.insertOne({user1: requestingUser, user2: opponentUser, gameData: EMPTY_GAME, userTurn: 0});
+        const gamesCollection = this.#db.collection('games');
+        await gamesCollection.insertOne({user1: requestingUser, user2: opponentUser, gameData: EMPTY_GAME, userTurn: 0});
+        return;
     }
 
     async acceptGame(gameId) {
@@ -78,7 +96,7 @@ class DatabaseAccess {
     }
 
     async updateGame(gameId, mark, position) {
-        const gamesCollection = client.db('tictactoe').collection('games');
+        const gamesCollection = this.#db.collection('games');
 
         const cursor = gamesCollection.find({_id: new ObjectId(gameId)});
 
