@@ -1,18 +1,9 @@
-const { MongoClient, ObjectId } = require('mongodb');
-const config = require('./dbConfig.json');
-url = `mongodb+srv://${config.userName}:${config.password}@${config.cluster}.${config.hostname}`;
 const PORT_NUM = process.argv.length > 2 ? process.argv[2] : 4000;
 
-const client = new MongoClient(url);
-const db = client.db('tictactoe');
+const { DatabaseAccess } = require('./dbAccess.js');
 
-(async function testConnection() {
-  await client.connect();
-  await db.command({ ping: 1 });
-})().catch((ex) => {
-  console.log(`Unable to connect to database with ${url} because ${ex.message}`);
-  process.exit(1);
-});
+const config = require('./dbConfig.json');
+const ticDB = new DatabaseAccess(config);
 
 const EMPTY_GAME = [
     ['', '', '', '', '', '', '', '', ''], 
@@ -25,37 +16,16 @@ const EMPTY_GAME = [
     ['', '', '', '', '', '', '', '', ''],
     ['', '', '', '', '', '', '', '', '']];
 
-// Mock game data
-const gamesData =  [{user1: 'Joseph', user2: "Jennifer", userTurn: 1, id: 1, gameData: [
-    ['', '', '', '', 'x', '', 'o', 'o', ''], 
-    ['x', '', 'o', '', 'x', '', 'o', '', 'x'],
-    ['o', '', '', '', 'x', '', 'o', '', ''],
-    ['x', '', '', '', 'x', '', 'o', '', ''],
-    ['o', '', '', '', 'o', '', 'x', '', ''],
-    ['x', '', 'o', '', '', 'x', 'o', '', ''],
-    ['o', '', '', 'x', '', '', '', '', 'o'],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', 'o', '', '', 'x', '', '', '', '']]}, {user1: "Marcos", user2: 'Joseph', userTurn: 1, id: 2, gameData: [
-    ['', '', '', '', 'x', '', '', '', ''], 
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', '', '', '']]},
-    // A userTurn of 0 means the game has not been started yet because it hasn't been accepted by the other user
-    {user1: 'Joseph', user2: "Ronald", userTurn: 0, id: 3, gameData: EMPTY_GAME}
-    ];
-
-
 
 const express = require('express');
 const app = express();
 
 // JSON parsing middleware
 app.use(express.json());
+
+// Use the cookie parser middleware
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 // Frontend static middleware
 app.use(express.static('public'));
@@ -64,43 +34,64 @@ app.use(express.static('public'));
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+function setAuthCookie(res, authToken) {
+    res.cookie('token', authToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
+}
+
+apiRouter.post('/auth/create', async (req, res) => {
+    if (await ticDB.getUser(req.body.email)) {
+        res.status(409).send({ msg: 'Existing user' });
+    } else {
+        const user = await ticDB.createUser(req.body.email, req.body.password);
+
+        // Set the cookie
+        setAuthCookie(res, user.token);
+
+        res.send({
+        id: user._id,
+        });
+    }
+});
+
+app.post('/auth/login', async (req, res) => {
+    const user = await ticDB.getUser(req.body.email);
+    if (user) {
+      if (await bcrypt.compare(req.body.password, user.password)) {
+        setAuthCookie(res, user.token);
+        res.send({ id: user._id });
+        return;
+      }
+    }
+    res.status(401).send({ msg: 'Unauthorized' });
+});
+
+app.get('/user/me', async (req, res) => {
+    authToken = req.cookies['token'];
+    const user = await collection.findOne({ token: authToken });
+    if (user) {
+      res.send({ email: user.email });
+      return;
+    }
+    res.status(401).send({ msg: 'Unauthorized' });
+});
+
 // Send games for a particular user
 apiRouter.post('/fetchGames', async (req, res) => {
     const requestingUser = req.body['user'];
-    // let userGames = [];
-    // for (game of gamesData) {
-    //     if (game['user1'] === requestingUser || game['user2'] === requestingUser) {
-    //         userGames.push(game);
-    //     }
-    // }
 
-    /*
-    const gamesData: {
-        user1: string;
-        user2: string;
-        userTurn: number;
-        id: number;
-        gameData: string[][];
-    }[]
-    */
+    const resultGames = await ticDB.getGames(requestingUser);
 
-    const gamesCollection = client.db('tictactoe').collection('games');
-
-    const query = {$or: [
-            {user1: requestingUser},
-            {user2: requestingUser}
-        ]};
-    const options = {limit: 10,};
-    const cursor = gamesCollection.find(query, options);
-    const resultGames = await cursor.toArray();
     res.send(resultGames);
 });
 
 // Create new game
-apiRouter.post('/createGame', (req, res) => {
+apiRouter.post('/createGame', async (req, res) => {
     if (req.body['requestingUser'] && req.body['opponentUser']) {
-        const gamesCollection = client.db('tictactoe').collection('games');
-        gamesCollection.insertOne({user1: req.body['requestingUser'], user2: req.body['opponentUser'], gameData: EMPTY_GAME, userTurn: 0});
+        await ticDB.createGame(req.body['requestingUser'], req.body['opponentUser']);
         res.status(201).json({message: 'Success'});
     } else {
         res.status(400).json({message: 'Requesting user or opponent user doesn\'t exist'});
@@ -114,39 +105,14 @@ apiRouter.post('/createGame', (req, res) => {
     // position - {layer1: number, layer2: number}
 apiRouter.post('/updateGame', async (req, res) => {
     const gameId = req.body['gameId'];
-    const gamesCollection = client.db('tictactoe').collection('games');
-
-    const cursor = gamesCollection.find({_id: new ObjectId(gameId)});
-
-    const resultArray = await cursor.toArray();
-
-    if (gameId && resultArray.length > 0) {
-        if (req.body['mark'] && (req.body['mark'] === 'o' || req.body['mark'] === 'x') && req.body['position']) {
-            const mark = req.body['mark'];
-            // position is expected to be a map with the first game layer and second game layer grid numbers 
-            const position = req.body['position'];
-            const userTurn = resultArray[0]['userTurn'];
-
-            let gamePos = "";
-            
-            let setter = {};
-            if (position['layer2'] === -1) {
-                gamePos = "gameData.0." + (position['layer1'] - 1).toString();
+    if (gameId) {
+        if (req.body['mark'] && req.body['position'] && (req.body['mark'] === 'x' || req.body['mark'] === 'o')) {
+            const updateSuccess = await ticDB.updateGame(gameId, req.body['mark'], req.body['position']);
+            if (updateSuccess === true) {
+                res.status(200).json({message: 'Game updated successfully'});
             } else {
-                gamePos = "gameData." + position['layer1'].toString() + "." + position['layer2'].toString();
+                res.status(500).json({message: 'Failed to update game'});
             }
-
-            setter[gamePos] = mark;
-            setter['userTurn'] = userTurn === 1 ? 2 : 1;
-
-             // const preUpdateResult = await gamesCollection
-
-            const result = await gamesCollection.updateOne(
-                { _id: new ObjectId(gameId) },
-                { $set: setter }
-            );
-
-            res.status(200).json({message: 'Game updated successfully'});
         } else {
             res.status(400).json({message: 'Bad mark or square position'});
         }
@@ -163,28 +129,27 @@ app.use((_req, res) => {
 // Send data for specific game
 apiRouter.post('/fetchGame', async (req, res) => {
     const gameId = req.body['gameId'];
-    const gamesCollection = client.db('tictactoe').collection('games');
-
-    const cursor = gamesCollection.find({_id: new ObjectId(gameId)});
-
-    const resultArray = await cursor.toArray();
-
-    if (resultArray.length > 0) {
-
-        res.status(200).send(resultArray[0]);
-    } else {
-        res.status(400).json({message: 'Game doesn\'t exist'});
+    
+    if (gameId) {
+        const resultGame = await ticDB.getGame(gameId);
+        if (resultGame) {
+            res.status(200).send(resultArray[0]);
+        }
     }
+
+    res.status(400).json({message: 'Game doesn\'t exist'});
 });
 
 apiRouter.post('/acceptGame', async (req, res) => {
     const gameId = req.body['gameId'];
-    const gamesCollection = client.db('tictactoe').collection('games');
 
-    const result = await gamesCollection.updateOne({_id: new ObjectId(gameId)}, {$set: {userTurn: 2}});
-
-    if (result.matchedCount && result.modifiedCount) {
-        res.status(200).json({message: "Success"});
+    if (gameId) {
+        const isSuccessful = await ticDB.acceptGame(gameId);
+        if (isSuccessful) {
+            res.status(200).json({message: "Success"});
+        } else {
+            res.status(400).json({message: "Unsuccessful - game ID may be invalid"});
+        }
     } else {
         res.status(400).json({message: 'Game doesn\'t exist'});
     }
@@ -192,12 +157,15 @@ apiRouter.post('/acceptGame', async (req, res) => {
 
 apiRouter.post('/rejectGame', async (req, res) => {
     const gameId = req.body['gameId'];
-    const gamesCollection = client.db('tictactoe').collection('games');
 
-    const result = await gamesCollection.deleteOne({_id: new ObjectId(gameId)});
-
-    if (result.deletedCount === 1) {
-        res.status(200).json({message: "Success"});
+    
+    if (gameId) {
+        const isSuccessful = await ticDB.rejectGame(gameId);
+        if (isSuccessful) {
+            res.status(200).json({message: "Success"});
+        } else {
+            res.status(400).json({message: 'Unsuccesful - game ID may be invalid'});
+        }
     } else {
         res.status(400).json({message: 'Game doesn\'t exist'});
     }

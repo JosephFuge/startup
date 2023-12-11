@@ -17,9 +17,11 @@ async function getUserGames() {
     //     games = games.concat(storedGames);
     // }
 
+    console.log(`pre-conversion games: ${games}`);
     if (games.length > 0) {
         games = Array.from(games.map((tempGame) => new GameData(tempGame['_id'], tempGame['gameData'], tempGame['user1'], tempGame['user2'], tempGame['userTurn'])));
 
+        console.log(games);
         return games;
     } else {
         return [];
