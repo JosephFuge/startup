@@ -29,7 +29,6 @@ app.use(cookieParser());
 
 // Prevent client from getting to game subfiles
 app.get('/game/*', (req, res) => {
-    console.log(`originalUrl: ${req.originalUrl}`);
     let newUrl = req.originalUrl.substring(req.originalUrl.indexOf('/game/') + '/game/'.length);
     if (newUrl.endsWith('.html')) {
         newUrl = newUrl.substring(0, newUrl.indexOf('.html'));
@@ -84,7 +83,6 @@ app.post('/login', async (req, res) => {
 async function checkAuth (req, res, next) {
     try {
       authToken = req.cookies['token'];
-      console.log(`token: ${authToken}`);
       const user = await ticDB.getUserByToken(authToken);
       if (user) {
         next();
@@ -97,9 +95,10 @@ async function checkAuth (req, res, next) {
   }
 
 const secureApiRouter = express.Router();
+secureApiRouter.use('/api/auth', checkAuth);
 apiRouter.use(secureApiRouter);
 
-secureApiRouter.use('/api/auth', checkAuth);
+
 // secureApiRouter.use('/game', checkAuth);
 
 app.get('/playgame', checkAuth, (_req, res) => {
@@ -115,7 +114,6 @@ app.get('/creategame', checkAuth, (_req, res) => {
 });
 
 apiRouter.delete('/auth/logout', (_req, res) => {
-    console.log('hit logout');
     res.clearCookie('token');
     res.status(204).end();
 });
