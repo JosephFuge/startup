@@ -84,7 +84,7 @@ async function checkAuth (req, res, next) {
     try {
       authToken = req.cookies['token'];
       const user = await ticDB.getUserByToken(authToken);
-      if (user) {
+      if (authToken && user) {
         next();
       } else {
         res.status(401).sendFile('unauthorized.html', { root: 'public' });
@@ -95,9 +95,9 @@ async function checkAuth (req, res, next) {
   }
 
 const secureApiRouter = express.Router();
-secureApiRouter.use('/api/auth', checkAuth);
 apiRouter.use(secureApiRouter);
 
+secureApiRouter.use('/api/auth', checkAuth);
 
 // secureApiRouter.use('/game', checkAuth);
 
@@ -133,7 +133,7 @@ app.get('/user/me', async (req, res) => {
 });
 
 // Send games for a particular user
-apiRouter.post('/auth/fetchGames', async (req, res) => {
+secureApiRouter.post('/auth/fetchGames', checkAuth, async (req, res) => {
     const requestingUser = req.body['user'];
 
     const resultGames = await ticDB.getGames(requestingUser);
@@ -142,7 +142,7 @@ apiRouter.post('/auth/fetchGames', async (req, res) => {
 });
 
 // Create new game
-apiRouter.post('/auth/createGame', async (req, res) => {
+secureApiRouter.post('/auth/createGame', checkAuth, async (req, res) => {
     if (req.body['requestingUser'] && req.body['opponentUser']) {
         await ticDB.createGame(req.body['requestingUser'], req.body['opponentUser']);
         res.status(201).json({message: 'Success'});
@@ -156,7 +156,7 @@ apiRouter.post('/auth/createGame', async (req, res) => {
     // gameId - number
     // mark - string, 'o' or 'x'
     // position - {layer1: number, layer2: number}
-apiRouter.post('/auth/updateGame', async (req, res) => {
+secureApiRouter.post('/auth/updateGame', checkAuth, async (req, res) => {
     const gameId = req.body['gameId'];
     if (gameId) {
         if (req.body['mark'] && req.body['position'] && (req.body['mark'] === 'x' || req.body['mark'] === 'o')) {
@@ -180,7 +180,7 @@ app.use((_req, res) => {
 });
 
 // Send data for specific game
-apiRouter.post('/auth/fetchGame', async (req, res) => {
+secureApiRouter.post('/auth/fetchGame', checkAuth, async (req, res) => {
     const gameId = req.body['gameId'];
     
     if (gameId) {
@@ -194,7 +194,7 @@ apiRouter.post('/auth/fetchGame', async (req, res) => {
     res.status(400).json({message: 'Game doesn\'t exist'});
 });
 
-apiRouter.post('/auth/acceptGame', async (req, res) => {
+secureApiRouter.post('/auth/acceptGame', checkAuth, async (req, res) => {
     const gameId = req.body['gameId'];
 
     if (gameId) {
@@ -209,7 +209,7 @@ apiRouter.post('/auth/acceptGame', async (req, res) => {
     }
 });
 
-apiRouter.post('/auth/rejectGame', async (req, res) => {
+secureApiRouter.post('/auth/rejectGame', checkAuth, async (req, res) => {
     const gameId = req.body['gameId'];
 
     
