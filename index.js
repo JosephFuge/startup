@@ -28,7 +28,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 // Prevent client from getting to game subfiles
-app.get('/game/*', (req, res) => {
+app.get('/game/*.html', (req, res) => {
     let newUrl = req.originalUrl.substring(req.originalUrl.indexOf('/game/') + '/game/'.length);
     if (newUrl.endsWith('.html')) {
         newUrl = newUrl.substring(0, newUrl.indexOf('.html'));

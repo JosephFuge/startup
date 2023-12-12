@@ -108,3 +108,13 @@ During this deliverable I converted my static website into a RESTful web server 
 **Provides backend endpoints for manipulating application data:** Users can create and play tictactoe games, which are uploaded  to the database by calling backend endpoints
 
 **Stores application data in MongoDB:** MongoDB stores the current state of games including which marks have been made and whose turn it is.
+
+## Login Deliverable
+
+**Supports new user registration:** Use a register button on the home page to create new users.
+
+**Supports existing user authentication:** Use a login page on the home page to authenticate and enter the website.
+
+**Stores and retrieves credentials in MongoDB:** Node Express backend stores and retrieves users in/from MongoDB.
+
+**Restricts application functionality based upon authentication:** APIs and pages that require authentication return a authenticate.
