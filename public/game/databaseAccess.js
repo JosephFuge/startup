@@ -5,7 +5,7 @@ async function getUserGames() {
     const storedGames = JSON.parse(localStorage.getItem("localGames"));
     console.log('storedGames: ' + storedGames);
 
-    let gamesResponse = await fetch('/api/fetchGames', {
+    let gamesResponse = await fetch('/api/auth/fetchGames', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({user: currentUser}),
@@ -17,9 +17,11 @@ async function getUserGames() {
     //     games = games.concat(storedGames);
     // }
 
+    console.log(`pre-conversion games: ${games}`);
     if (games.length > 0) {
         games = Array.from(games.map((tempGame) => new GameData(tempGame['_id'], tempGame['gameData'], tempGame['user1'], tempGame['user2'], tempGame['userTurn'])));
 
+        console.log(games);
         return games;
     } else {
         return [];
@@ -43,7 +45,7 @@ async function saveNewGame(newGameData) {
 }
 
 function updateGame(gameId, mark, position) {
-    fetch('/api/updateGame', {
+    fetch('/api/auth/updateGame', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({gameId: gameId, mark: mark, position: position}),
@@ -52,7 +54,7 @@ function updateGame(gameId, mark, position) {
 
 async function acceptOrRejectGame(isAccept, gameId) {
     if (isAccept) {
-        const resultResponse = await fetch('/api/acceptGame', {
+        const resultResponse = await fetch('/api/auth/acceptGame', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({gameId: gameId}),
@@ -63,7 +65,7 @@ async function acceptOrRejectGame(isAccept, gameId) {
             window.location.href = "playgame.html";
         }
     } else {
-        fetch('/api/rejectGame', {
+        fetch('/api/auth/rejectGame', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({gameId: gameId}),
@@ -72,7 +74,7 @@ async function acceptOrRejectGame(isAccept, gameId) {
 }
 
 async function fetchSpecificGame(gameId) {
-    let gameResponse = await fetch('/api/fetchGame', {
+    let gameResponse = await fetch('/api/auth/fetchGame', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({gameId: gameId}),
