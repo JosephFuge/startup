@@ -1,5 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 
 class DatabaseAccess {
 
@@ -27,7 +28,13 @@ class DatabaseAccess {
     async getUserByToken(authToken) {
         const usersCollection = this.#db.collection('users');
 
-        return await usersCollection.findOne({authToken: authToken});
+        const result = await usersCollection.findOne({token: authToken});
+
+        if (result) {
+            return result;
+        } else {
+            return false;
+        }
     }
     
     async createUser(email, password) {
@@ -57,8 +64,6 @@ class DatabaseAccess {
         const options = {limit: 10,};
         const cursor = gamesCollection.find(query, options);
         const resultGames = await cursor.toArray();
-        console.log(`getGames result: ${resultGames}`);
-        console.log(`first game user1: ${resultGames[0]['gameData']}`);
         return resultGames;
     }
 

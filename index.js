@@ -1,5 +1,5 @@
 const PORT_NUM = process.argv.length > 2 ? process.argv[2] : 4000;
-
+const bcrypt = require('bcrypt');
 const { DatabaseAccess } = require('./dbAccess.js');
 
 const config = require('./dbConfig.json');
@@ -27,6 +27,16 @@ app.use(express.json());
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+// Prevent client from getting to game subfiles
+app.get('/game/*', (req, res) => {
+    console.log(`originalUrl: ${req.originalUrl}`);
+    let newUrl = req.originalUrl.substring(req.originalUrl.indexOf('/game/') + '/game/'.length);
+    if (newUrl.endsWith('.html')) {
+        newUrl = newUrl.substring(0, newUrl.indexOf('.html'));
+    }
+    res.redirect(`/${newUrl}`);
+});
+
 // Frontend static middleware
 app.use(express.static('public'));
 
@@ -39,10 +49,11 @@ function setAuthCookie(res, authToken) {
         secure: true,
         httpOnly: true,
         sameSite: 'strict',
+        path: '/'
     });
 }
 
-apiRouter.post('/auth/create', async (req, res) => {
+app.post('/register', async (req, res) => {
     if (await ticDB.getUser(req.body.email)) {
         res.status(409).send({ msg: 'Existing user' });
     } else {
@@ -51,22 +62,62 @@ apiRouter.post('/auth/create', async (req, res) => {
         // Set the cookie
         setAuthCookie(res, user.token);
 
-        res.send({
+        res.status(200).send({
             id: user._id,
         });
     }
 });
 
-app.post('/auth/login', async (req, res) => {
+
+app.post('/login', async (req, res) => {
     const user = await ticDB.getUser(req.body.email);
     if (user) {
       if (await bcrypt.compare(req.body.password, user.password)) {
         setAuthCookie(res, user.token);
-        res.send({ id: user._id });
+        res.status(200).send({ id: user._id });
         return;
       }
     }
     res.status(401).send({ msg: 'Unauthorized' });
+});
+
+async function checkAuth (req, res, next) {
+    try {
+      authToken = req.cookies['token'];
+      console.log(`token: ${authToken}`);
+      const user = await ticDB.getUserByToken(authToken);
+      if (user) {
+        next();
+      } else {
+        res.status(401).json({msg: 'Login failed; user does not exist'});
+      }
+    } catch (error) {
+        res.status(401).json({msg: 'Login failed; user does not exist'});
+    }
+  }
+
+const secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use('/api/auth', checkAuth);
+// secureApiRouter.use('/game', checkAuth);
+
+app.get('/playgame', checkAuth, (_req, res) => {
+    res.sendFile('/game/playgame.html', { root: 'public' });
+});
+
+app.get('/gameselect', checkAuth, (_req, res) => {
+    res.sendFile('/game/gameselect.html', { root: 'public' });
+});
+
+app.get('/creategame', checkAuth, (_req, res) => {
+    res.sendFile('/game/creategame.html', { root: 'public' });
+});
+
+apiRouter.delete('/auth/logout', (_req, res) => {
+    console.log('hit logout');
+    res.clearCookie('token');
+    res.status(204).end();
 });
 
 app.get('/user/me', async (req, res) => {
@@ -84,7 +135,7 @@ app.get('/user/me', async (req, res) => {
 });
 
 // Send games for a particular user
-apiRouter.post('/fetchGames', async (req, res) => {
+apiRouter.post('/auth/fetchGames', async (req, res) => {
     const requestingUser = req.body['user'];
 
     const resultGames = await ticDB.getGames(requestingUser);
@@ -93,7 +144,7 @@ apiRouter.post('/fetchGames', async (req, res) => {
 });
 
 // Create new game
-apiRouter.post('/createGame', async (req, res) => {
+apiRouter.post('/auth/createGame', async (req, res) => {
     if (req.body['requestingUser'] && req.body['opponentUser']) {
         await ticDB.createGame(req.body['requestingUser'], req.body['opponentUser']);
         res.status(201).json({message: 'Success'});
@@ -107,7 +158,7 @@ apiRouter.post('/createGame', async (req, res) => {
     // gameId - number
     // mark - string, 'o' or 'x'
     // position - {layer1: number, layer2: number}
-apiRouter.post('/updateGame', async (req, res) => {
+apiRouter.post('/auth/updateGame', async (req, res) => {
     const gameId = req.body['gameId'];
     if (gameId) {
         if (req.body['mark'] && req.body['position'] && (req.body['mark'] === 'x' || req.body['mark'] === 'o')) {
@@ -131,7 +182,7 @@ app.use((_req, res) => {
 });
 
 // Send data for specific game
-apiRouter.post('/fetchGame', async (req, res) => {
+apiRouter.post('/auth/fetchGame', async (req, res) => {
     const gameId = req.body['gameId'];
     
     if (gameId) {
@@ -145,7 +196,7 @@ apiRouter.post('/fetchGame', async (req, res) => {
     res.status(400).json({message: 'Game doesn\'t exist'});
 });
 
-apiRouter.post('/acceptGame', async (req, res) => {
+apiRouter.post('/auth/acceptGame', async (req, res) => {
     const gameId = req.body['gameId'];
 
     if (gameId) {
@@ -160,7 +211,7 @@ apiRouter.post('/acceptGame', async (req, res) => {
     }
 });
 
-apiRouter.post('/rejectGame', async (req, res) => {
+apiRouter.post('/auth/rejectGame', async (req, res) => {
     const gameId = req.body['gameId'];
 
     

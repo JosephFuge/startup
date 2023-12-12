@@ -35,6 +35,11 @@ header > h1 {
     font-size: 24px;
 }
 
+.error-text {
+    display: none;
+    color: red;
+}
+
 span, span * {
     display: inline-flex;
     justify-content: center;

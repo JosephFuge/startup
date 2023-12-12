@@ -42,8 +42,9 @@
         <form id="loginForm">
             <input type="text" id="username" class="text-field" placeholder="Username">
             <input type="password" id="password" class="text-field" placeholder="Password">
+            <p class="error-text" id="loginErrorText">Invalid username or password</p>
             <span>
-                <a class="rounded-button" href="/game/gameselect.html"><input type="submit" formaction="/game/gameselect.html" value="Register"></a>
+                <input class="rounded-button" type="button" onclick="register();" value="Register">
                 <input class="rounded-button" type="button" onclick="login();" value="Login">
             </span>
         </form>
