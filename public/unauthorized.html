@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="/login.js"></script>
+    <title>Recursive TicTacToe Home</title>
+</head>
+<body>
+    <header>
+        <h1><svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+
+            <g>
+             <title>Layer 1</title>
+             <rect id="svg_1" height="518" width="37" y="36" x="305" stroke="#000" fill="#FFFFFF"/>
+             <rect id="svg_2" height="518" width="37" y="36" x="512" stroke="#000" fill="#FFFFFF"/>
+             <rect transform="rotate(-90 422.5 184)" id="svg_3" height="518" width="37" y="-75" x="404" stroke="#000" fill="#FFFFFF"/>
+             <rect transform="rotate(-90 422.5 402)" id="svg_4" height="518" width="37" y="143" x="404" stroke="#000" fill="#FFFFFF"/>
+             <path stroke="#000" id="svg_6" d="m170.32499,94.8975l0,0c0,-34.51779 27.98221,-62.5 62.5,-62.5l0,0c16.57602,0 32.47315,6.5848 44.19417,18.30582c11.72103,11.72103 18.30584,27.61814 18.30584,44.19418l0,0c0,34.51779 -27.98221,62.5 -62.5,62.5l0,0c-34.51779,0 -62.5,-27.98221 -62.5,-62.5zm31.25,0l0,0c0,17.25889 13.99111,31.25 31.25,31.25c17.2589,0 31.25,-13.99111 31.25,-31.25c0,-17.25889 -13.99111,-31.25 -31.25,-31.25l0,0c-17.25889,0 -31.25,13.99111 -31.25,31.25z" fill="#007fff"/>
+             <path id="svg_8" d="m559.09506,459.60339l31.27592,-31.27592l33.22392,33.22365l33.22392,-33.22365l31.27621,31.27592l-33.22393,33.22392l33.22393,33.22392l-31.27621,31.27621l-33.22392,-33.22393l-33.22392,33.22393l-31.27592,-31.27621l33.22365,-33.22392l-33.22365,-33.22392z" stroke="#000" fill="#ff0000"/>
+             <rect id="svg_11" height="41.15266" width="3.74115" y="4.12031" x="14" stroke="#000" fill="#FFFFFF"/>
+             <rect id="svg_12" height="41.15266" width="3.74115" y="3.91809" x="32" stroke="#000" fill="#FFFFFF"/>
+             <rect id="svg_13" height="41.15266" width="3.74115" y="3.91809" x="32" stroke="#000" fill="#FFFFFF"/>
+             <rect transform="rotate(90 24.6693 14.8888)" stroke="#000" id="svg_14" height="41.15266" width="3.74115" y="-5.68757" x="22.79879" fill="#FFFFFF"/>
+             <rect transform="rotate(90 24.8716 34.1001)" stroke="#000" id="svg_15" height="41.15266" width="3.74115" y="13.52374" x="23.00102" fill="#FFFFFF"/>
+             <path stroke="#000" style="vector-effect: non-scaling-stroke;" stroke-width="0" id="svg_16" d="m37.15098,39.16139l2.05922,-2.05922l2.18748,2.18746l2.18748,-2.18746l2.05924,2.05922l-2.18748,2.18748l2.18748,2.18748l-2.05924,2.05924l-2.18748,-2.18748l-2.18748,2.18748l-2.05922,-2.05924l2.18746,-2.18748l-2.18746,-2.18748z" fill="#ff0000"/>
+             <path stroke-width="0" stroke="#000" id="svg_17" d="m3.74856,7.44546l0,0c0,-2.40124 1.94659,-4.34782 4.34782,-4.34782l0,0c1.15311,0 2.259,0.45807 3.07438,1.27345c0.81538,0.81538 1.27345,1.92126 1.27345,3.07438l0,0c0,2.40124 -1.94659,4.34782 -4.34782,4.34782l0,0c-2.40124,0 -4.34782,-1.94659 -4.34782,-4.34782zm2.17391,0l0,0c0,1.20062 0.97329,2.17391 2.17391,2.17391c1.20062,0 2.17391,-0.97329 2.17391,-2.17391c0,-1.20062 -0.97329,-2.17391 -2.17391,-2.17391l0,0c-1.20062,0 -2.17391,0.97329 -2.17391,2.17391z" fill="#007fff"/>
+            </g>
+           </svg>Recursive TicTacToe Startup - Home</h1>
+        <nav>
+            <a href="/about.html" class="rounded-button"><svg class="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-8h2v8zm-1-12.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/></svg>
+                <p class="nav-button-text"> About</p>
+                </a>
+        </nav>
+    </header>
+    <div class="center">
+        <a href="/">
+            <svg clip-rule="evenodd" fill-rule="evenodd" fill="#FF0000" stroke-linejoin="round" stroke-miterlimit="2" width="256" height="256" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 8.933-2.721-2.722c-.146-.146-.339-.219-.531-.219-.404 0-.75.324-.75.749 0 .193.073.384.219.531l2.722 2.722-2.728 2.728c-.147.147-.22.34-.22.531 0 .427.35.75.751.75.192 0 .384-.073.53-.219l2.728-2.728 2.729 2.728c.146.146.338.219.53.219.401 0 .75-.323.75-.75 0-.191-.073-.384-.22-.531l-2.727-2.728 2.717-2.717c.146-.147.219-.338.219-.531 0-.425-.346-.75-.75-.75-.192 0-.385.073-.531.22z" fill-rule="nonzero"/></svg>
+            <p>Please login to gain access.</p>
+        </a>
+    </div>
+    <br>
+    <footer>
+        <p>Author: Joseph Fuge</p>
+        <a href="https://github.com/JosephFuge/startup">GitHub</a>   
+    </footer>   
+</body>
+</html>

@@ -89,10 +89,10 @@ async function checkAuth (req, res, next) {
       if (user) {
         next();
       } else {
-        res.status(401).json({msg: 'Login failed; user does not exist'});
+        res.status(401).sendFile('unauthorized.html', { root: 'public' });
       }
     } catch (error) {
-        res.status(401).json({msg: 'Login failed; user does not exist'});
+        res.status(401).sendFile('unauthorized.html', { root: 'public' });
     }
   }
 
