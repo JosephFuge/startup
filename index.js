@@ -1,6 +1,7 @@
 const PORT_NUM = process.argv.length > 2 ? process.argv[2] : 4000;
 const bcrypt = require('bcrypt');
 const { DatabaseAccess } = require('./dbAccess.js');
+const { peerProxy } = require('./peerProxy.js');
 
 const config = require('./dbConfig.json');
 const ticDB = new DatabaseAccess(config);
@@ -243,4 +244,6 @@ function getGameDataFormatted(gameData) {
     return output;
 }
 
-app.listen(PORT_NUM, () => console.log(`Server is listening on port ${PORT_NUM}`));
+const httpService = app.listen(PORT_NUM, () => console.log(`Server is listening on port ${PORT_NUM}`));
+
+peerProxy(httpService);

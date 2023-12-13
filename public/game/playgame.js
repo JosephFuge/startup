@@ -3,10 +3,10 @@ const markedCrosses = new Set([]);
 let thisGame;
 let currentUser = '';
 let gameOver = false;
-
+const gameId = localStorage.getItem('currentGameId');
+let webSocket = new WebSocketAccess(gameId, markSquare);
 
 async function setUpGame() {
-    const gameId = localStorage.getItem('currentGameId');
     if (gameId) {
         currentUser = localStorage.getItem('username');
         thisGame = await fetchSpecificGame(gameId);
@@ -54,9 +54,11 @@ async function setUpGame() {
     }
 }
 
+window.onbeforeunload = () => webSocket.closeConnection();
+
 
 function setUserEmojiReaction() {
-    const reaction = getEmojiReaction();
+    const reaction = webSocket.getEmojiReaction();
 
     const user2EmojiBubble = document.getElementById("user2Emoji");
     user2EmojiBubble.innerHTML = reaction;
@@ -140,6 +142,8 @@ function markSquare(fillCircle, squareNum, updateServer) {
         if (updateServer) {
             const gameId = localStorage.getItem('currentGameId');
             updateGame(gameId, thisGame.user1 === currentUser ? 'o' : 'x', {layer1: squareNum, layer2: -1});
+
+            webSocket.sendGameMove(fillCircle, squareNum, -1);
     
             if (!checkVictory(thisGame.user1 === currentUser ? markedCircles : markedCrosses)) {
                 thisGame.turn = thisGame.turn === 1 ? 2 : 1;
@@ -267,6 +271,3 @@ function setDefaultBarAttributes(barElement) {
     barElement.setAttribute('height', '550');
     barElement.setAttribute('width', '25');
 }
-
-
-//<rect transform="rotate(-90 422.5 184)" id="victory_bar" height="550" width="25" y="-87" x="500" stroke="#000" fill="currentColor"/>
