@@ -118,3 +118,13 @@ During this deliverable I converted my static website into a RESTful web server 
 **Stores and retrieves credentials in MongoDB:** Node Express backend stores and retrieves users in/from MongoDB.
 
 **Restricts application functionality based upon authentication:** APIs and pages that require authentication return a authenticate.
+
+## WebSocket Deliverable
+
+**Backend listens for WebSocket connection:** proxyAccess.js establishes a websocket listener, using gameId's to make sure messages are only sent between active participants of a game.
+
+**Frontend makes WebSocket connection:** A WebSocketAccess class in websocketAccess.js establishes a websocket connection from the frontend on the playgame.html page
+
+**Data sent over WebSocket connection:** Emoji reaction and gameplay data (marking squares) are sent over the websocket connection and update the UI in real time.
+
+**WebSocket data displayed in the application interface:** Clicking an emoji reaction displays it on the other user's screen for 5 seconds. Making a mark when it is your turn also makes the mark on the other user's screen and enables them to make a mark.
