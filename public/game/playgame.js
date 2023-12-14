@@ -11,6 +11,8 @@ async function setUpGame() {
         currentUser = localStorage.getItem('username');
         thisGame = await fetchSpecificGame(gameId);
 
+        document.getElementById('opponentUserName').innerText = currentUser === thisGame.user1 ? thisGame.user2 : thisGame.user1;
+
         const circlesToMark = new Set([]);
         const crossesToMark = new Set([]);
     

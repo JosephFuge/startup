@@ -49,16 +49,27 @@
     color: #FF5555;
 }
 
-#user1Emoji, #user2Emoji {
+#user2Emoji {
     border-radius: 100%;
     display: none;
     padding: 8px;
     font-size: 24px;
 }
 
-#user1Emoji {
-    border-bottom-left-radius: 0%;
+#currentUserName {
+    text-align: start;
+    margin-left: 12px;
+    margin-top: 0px;
+}
+
+#currentUserEmoji1, #currentUserEmoji2, #currentUserEmoji3, #currentUserEmoji4, #currentUserEmoji5  {
+    display: inline-block;
     border: thin solid white;
+    border-radius: 100%;
+    width: 16px;
+    height: 16px;
+    padding: 8px;
+    margin: 0;
     background-image: linear-gradient(blue, cyan);
 }
 
