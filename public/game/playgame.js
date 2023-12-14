@@ -4,7 +4,7 @@ let thisGame;
 let currentUser = '';
 let gameOver = false;
 const gameId = localStorage.getItem('currentGameId');
-let webSocket = new WebSocketAccess(gameId, markSquare);
+let webSocket = new WebSocketAccess(gameId, markSquare, setUserEmojiReaction);
 
 async function setUpGame() {
     if (gameId) {
@@ -59,12 +59,21 @@ async function setUpGame() {
 window.onbeforeunload = () => webSocket.closeConnection();
 
 
-function setUserEmojiReaction() {
-    const reaction = webSocket.getEmojiReaction();
+function setUserEmojiReaction(emojiIcon) {
 
     const user2EmojiBubble = document.getElementById("user2Emoji");
-    user2EmojiBubble.innerHTML = reaction;
+    user2EmojiBubble.innerText = emojiIcon;
     user2EmojiBubble.style.display = "inline";
+
+    setTimeout(function(){
+        const user2EmojiTempBubble = document.getElementById("user2Emoji");
+        user2EmojiTempBubble.innerText = '';
+        user2EmojiTempBubble.style.display = 'none';
+    }, 5000);
+}
+
+function sendEmoji(emojiNum) {
+    webSocket.sendEmojiReaction(emojiNum);
 }
 
 function getXandY(isCircle, squareNum) {

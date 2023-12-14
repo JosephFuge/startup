@@ -4,12 +4,14 @@ class WebSocketAccess {
     #socket;
     gameId;
     markSquare;
+    showEmoji;
 
-    constructor(socketGameId, markSquareCallback) {
+    constructor(socketGameId, markSquareCallback, showEmojiCallback) {
         this.gameId = socketGameId;
 
         this.#configureWebSocket();
         this.markSquare = markSquareCallback;
+        this.showEmoji = showEmojiCallback;
     }
 
     closeConnection() {
@@ -30,20 +32,43 @@ class WebSocketAccess {
         this.#socket.onmessage = async (event) => {
             const msg = JSON.parse(await event.data.text());
             if (msg.type === TicTacToeMove) {
-                console.log(`TicTacToe Move Received - mark: ${msg.mark} layer1: ${msg.position['layer1']} layer2: ${msg.position['layer2']}`);
+                // console.log(`TicTacToe Move Received - mark: ${msg.mark} layer1: ${msg.position['layer1']} layer2: ${msg.position['layer2']}`);
                 this.markSquare(msg.isCircle, msg.position['layer1'], false, true);
             } else if (msg.type === EmojiReaction) {
                 console.log(`Emoji Reaction Received ${msg.emojiNum}`);
+                this.getEmojiReaction(msg.emojiNum);
             }
         };
     }
 
-    getEmojiReaction() {
+    getEmojiReaction(emojiNum) {
         // TODO: Convert to pulling emoji data from WebSocket connection
         // const laughEmoji = '😂';
-        const sadEmoji = '😢';
-    
-        return sadEmoji;
+        let emoji = '';
+
+        switch (emojiNum) {
+            case 1:
+                emoji = '😂';
+                break;
+            case 2:
+                emoji = '👍';
+                break;
+            case 3:
+                emoji = '❤️';
+                break;
+            case 4:
+                emoji = '👋';
+                break;
+            case 5:
+                emoji = '😢';
+                break;
+            default:
+                break;
+        }
+        
+        if (emoji.length > 0) {
+            this.showEmoji(emoji);
+        }
     }
     
     sendEmojiReaction(emojiNum) {

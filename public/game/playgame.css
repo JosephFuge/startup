@@ -66,11 +66,13 @@
     display: inline-block;
     border: thin solid white;
     border-radius: 100%;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     padding: 8px;
+    font-size: 18px;
     margin: 0;
     background-image: linear-gradient(blue, cyan);
+    cursor: pointer;
 }
 
 #user2Emoji {
