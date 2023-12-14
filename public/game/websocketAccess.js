@@ -31,7 +31,7 @@ class WebSocketAccess {
             const msg = JSON.parse(await event.data.text());
             if (msg.type === TicTacToeMove) {
                 console.log(`TicTacToe Move Received - mark: ${msg.mark} layer1: ${msg.position['layer1']} layer2: ${msg.position['layer2']}`);
-                this.markSquare(msg.isCircle, msg.position['layer1'], false);
+                this.markSquare(msg.isCircle, msg.position['layer1'], false, true);
             } else if (msg.type === EmojiReaction) {
                 console.log(`Emoji Reaction Received ${msg.emojiNum}`);
             }

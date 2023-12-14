@@ -37,7 +37,8 @@ async function saveNewGame(newGameData) {
     //     newGames = newGames.concat(currentGamesObj);
     // }
     // localStorage.setItem("localGames", JSON.stringify(newGames));
-    fetch('/api/createGame', {
+    console.log(newGameData);
+    await fetch('/api/auth/createGame', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({requestingUser: newGameData.user1, opponentUser: newGameData.user2})
@@ -62,7 +63,7 @@ async function acceptOrRejectGame(isAccept, gameId) {
         const result = await resultResponse.json();
         if (result['message'] === 'Success') {
             localStorage.setItem('currentGameId', gameId);
-            window.location.href = "playgame.html";
+            window.location.href = "/playgame";
         }
     } else {
         fetch('/api/auth/rejectGame', {
