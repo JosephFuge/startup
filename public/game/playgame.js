@@ -166,7 +166,7 @@ function markSquare(fillCircle, squareNum, updateServer, isFromOtherPlayer) {
                 });
             }
         } else if (isFromOtherPlayer) {
-            if (!checkVictory(thisGame.user1 === currentUser ? markedCircles : markedCrosses)) {
+            if (!checkVictory(thisGame.user2 === currentUser ? markedCircles : markedCrosses)) {
                 thisGame.turn = thisGame.turn === 1 ? 2 : 1;
                 
                 for (let i = 1; i <= 9; i++) {
@@ -185,13 +185,6 @@ function markSquare(fillCircle, squareNum, updateServer, isFromOtherPlayer) {
                 ghostMarks.forEach(element => {
                     element.parentNode.removeChild(element);
                 });
-            }
-            for (let i = 1; i <= 9; i++) {
-                if (!markedCircles.has(i) && !markedCrosses.has(i)) {
-                    let ghostMark = document.getElementById("square_" + i.toString());
-                    ghostMark.setAttribute('d', thisGame.user1 === currentUser ? getCirclePath(i) : getCrossPath(i));
-                    ghostMark.setAttribute('class', thisGame.user1 === currentUser ? 'tictactoe-square circleMark' : 'tictactoe-square crossMark');
-                }
             }
         } else {
             for (let i = 1; i <= 9; i++) {

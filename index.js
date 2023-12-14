@@ -134,7 +134,6 @@ secureApiRouter.post('/auth/fetchGames', checkAuth, async (req, res) => {
 // Create new game
 secureApiRouter.post('/auth/createGame', checkAuth, async (req, res) => {
     if (req.body['requestingUser'] && req.body['opponentUser']) {
-        console.log(`Creating game: ${req.body['requestingUser']}, ${req.body['opponentUser']}`)
         await ticDB.createGame(req.body['requestingUser'], req.body['opponentUser']);
         res.status(201).json({message: 'Success'});
     } else {
