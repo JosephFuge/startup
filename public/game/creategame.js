@@ -16,5 +16,5 @@ function newGame() {
 
     // document.getElementById('recursionLayersSelect');
     // TODO: Add a second layer
-    window.location.href = "gameselect.html";
+    window.location.href = "/gameselect";
 }

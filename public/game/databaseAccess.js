@@ -3,7 +3,6 @@ async function getUserGames() {
     const currentUser = localStorage.getItem("username");
     
     const storedGames = JSON.parse(localStorage.getItem("localGames"));
-    console.log('storedGames: ' + storedGames);
 
     let gamesResponse = await fetch('/api/auth/fetchGames', {
         method: 'POST',
@@ -17,11 +16,9 @@ async function getUserGames() {
     //     games = games.concat(storedGames);
     // }
 
-    console.log(`pre-conversion games: ${games}`);
     if (games.length > 0) {
         games = Array.from(games.map((tempGame) => new GameData(tempGame['_id'], tempGame['gameData'], tempGame['user1'], tempGame['user2'], tempGame['userTurn'])));
 
-        console.log(games);
         return games;
     } else {
         return [];
@@ -37,7 +34,8 @@ async function saveNewGame(newGameData) {
     //     newGames = newGames.concat(currentGamesObj);
     // }
     // localStorage.setItem("localGames", JSON.stringify(newGames));
-    fetch('/api/createGame', {
+    console.log(newGameData);
+    await fetch('/api/auth/createGame', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({requestingUser: newGameData.user1, opponentUser: newGameData.user2})
@@ -62,7 +60,7 @@ async function acceptOrRejectGame(isAccept, gameId) {
         const result = await resultResponse.json();
         if (result['message'] === 'Success') {
             localStorage.setItem('currentGameId', gameId);
-            window.location.href = "playgame.html";
+            window.location.href = "/playgame";
         }
     } else {
         fetch('/api/auth/rejectGame', {

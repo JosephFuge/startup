@@ -3,13 +3,15 @@ const markedCrosses = new Set([]);
 let thisGame;
 let currentUser = '';
 let gameOver = false;
-
+const gameId = localStorage.getItem('currentGameId');
+let webSocket = new WebSocketAccess(gameId, markSquare, setUserEmojiReaction);
 
 async function setUpGame() {
-    const gameId = localStorage.getItem('currentGameId');
     if (gameId) {
         currentUser = localStorage.getItem('username');
         thisGame = await fetchSpecificGame(gameId);
+
+        document.getElementById('opponentUserName').innerText = currentUser === thisGame.user1 ? thisGame.user2 : thisGame.user1;
 
         const circlesToMark = new Set([]);
         const crossesToMark = new Set([]);
@@ -54,13 +56,24 @@ async function setUpGame() {
     }
 }
 
+window.onbeforeunload = () => webSocket.closeConnection();
 
-function setUserEmojiReaction() {
-    const reaction = getEmojiReaction();
+
+function setUserEmojiReaction(emojiIcon) {
 
     const user2EmojiBubble = document.getElementById("user2Emoji");
-    user2EmojiBubble.innerHTML = reaction;
+    user2EmojiBubble.innerText = emojiIcon;
     user2EmojiBubble.style.display = "inline";
+
+    setTimeout(function(){
+        const user2EmojiTempBubble = document.getElementById("user2Emoji");
+        user2EmojiTempBubble.innerText = '';
+        user2EmojiTempBubble.style.display = 'none';
+    }, 5000);
+}
+
+function sendEmoji(emojiNum) {
+    webSocket.sendEmojiReaction(emojiNum);
 }
 
 function getXandY(isCircle, squareNum) {
@@ -120,7 +133,7 @@ function getCrossPath(squareNum) {
     return 'm' + getXandY(false, squareNum) + 'l31.27592,-31.27592l33.22392,33.22365l33.22392,-33.22365l31.27621,31.27592l-33.22393,33.22392l33.22393,33.22392l-31.27621,31.27621l-33.22392,-33.22393l-33.22392,33.22393l-31.27592,-31.27621l33.22365,-33.22392l-33.22365,-33.22392z';
 }
 
-function markSquare(fillCircle, squareNum, updateServer) {
+function markSquare(fillCircle, squareNum, updateServer, isFromOtherPlayer) {
     if (!updateServer || (fillCircle && thisGame.turn === 1) || (!fillCircle && thisGame.turn === 2)) {
         const square = document.getElementById('square_' + squareNum);
         let newMark = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -140,6 +153,8 @@ function markSquare(fillCircle, squareNum, updateServer) {
         if (updateServer) {
             const gameId = localStorage.getItem('currentGameId');
             updateGame(gameId, thisGame.user1 === currentUser ? 'o' : 'x', {layer1: squareNum, layer2: -1});
+
+            webSocket.sendGameMove(fillCircle, squareNum, -1);
     
             if (!checkVictory(thisGame.user1 === currentUser ? markedCircles : markedCrosses)) {
                 thisGame.turn = thisGame.turn === 1 ? 2 : 1;
@@ -154,6 +169,27 @@ function markSquare(fillCircle, squareNum, updateServer) {
             } else {
                 gameOver = true;
                 document.getElementById('userTurnHeader').innerHTML = 'VICTORY';
+                let ghostMarks = document.querySelectorAll('.tictactoe-square');
+        
+                // Loop through the NodeList and remove each element
+                ghostMarks.forEach(element => {
+                    element.parentNode.removeChild(element);
+                });
+            }
+        } else if (isFromOtherPlayer) {
+            if (!checkVictory(thisGame.user2 === currentUser ? markedCircles : markedCrosses)) {
+                thisGame.turn = thisGame.turn === 1 ? 2 : 1;
+                
+                for (let i = 1; i <= 9; i++) {
+                    if (!markedCircles.has(i) && !markedCrosses.has(i)) {
+                        let ghostMark = document.getElementById("square_" + i.toString());
+                        ghostMark.setAttribute('d', thisGame.user1 === currentUser ? getCirclePath(i) : getCrossPath(i));
+                        ghostMark.setAttribute('class', thisGame.user1 === currentUser ? 'tictactoe-square circleMark' : 'tictactoe-square crossMark');
+                    }
+                }
+            } else {
+                gameOver = true;
+                document.getElementById('userTurnHeader').innerHTML = 'DEFEAT';
                 let ghostMarks = document.querySelectorAll('.tictactoe-square');
         
                 // Loop through the NodeList and remove each element
@@ -267,6 +303,3 @@ function setDefaultBarAttributes(barElement) {
     barElement.setAttribute('height', '550');
     barElement.setAttribute('width', '25');
 }
-
-
-//<rect transform="rotate(-90 422.5 184)" id="victory_bar" height="550" width="25" y="-87" x="500" stroke="#000" fill="currentColor"/>

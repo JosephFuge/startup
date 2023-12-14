@@ -18,7 +18,7 @@ async function displayGames() {
             dynamicBody += '</p>\
         </div><br>';
         } else if ((currentUser === currentGame.user1 && currentGame.turn === 1) || (currentUser === currentGame.user2 && currentGame.turn === 2)) {
-            dynamicBody += '<button class="async-game play-game" onclick="localStorage.setItem(\'currentGameId\', \'' + currentGame.id + '\');window.location.href = \'playgame.html\';">\
+            dynamicBody += '<button class="async-game play-game" onclick="localStorage.setItem(\'currentGameId\', \'' + currentGame.id + '\');window.location.href = \'playgame\';">\
             <div>\
                 <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">\
                     <g>\
@@ -76,7 +76,7 @@ async function displayGames() {
     }
 
     dynamicBody += '<div id="createNewGame">\
-    <a class="rounded-button" id="newGame" href="/game/creategame.html"><input type="submit" value="New Game +"></a>\
+    <a class="rounded-button" id="newGame" href="/creategame"><input type="submit" value="New Game +"></a>\
 </div>';
 
     document.getElementById("gameSelectContent").innerHTML = dynamicBody;
