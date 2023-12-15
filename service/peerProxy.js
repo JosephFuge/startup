@@ -1,5 +1,5 @@
-const { WebSocketServer } = require('ws');
-const uuid = require('uuid');
+import { WebSocketServer } from 'ws';
+import { v4 as uuid } from 'uuid';
 
 function peerProxy(httpServer) {
   // Create a websocket object
@@ -21,7 +21,7 @@ function peerProxy(httpServer) {
     if (!games[gameId]) {
         games[gameId] = [];
     }
-    const connection = { id: uuid.v4(), alive: true, ws: ws };
+    const connection = { id: uuid(), alive: true, ws: ws };
     games[gameId].push(connection);
 
     // Forward messages to the other player in the game
@@ -63,4 +63,4 @@ function peerProxy(httpServer) {
   }, 10000);
 }
 
-module.exports = { peerProxy };
+export { peerProxy };

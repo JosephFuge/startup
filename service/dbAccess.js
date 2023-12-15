@@ -1,6 +1,6 @@
-const { MongoClient, ObjectId } = require('mongodb');
-const bcrypt = require('bcrypt');
-const uuid = require('uuid');
+import { MongoClient, ObjectId } from 'mongodb';
+import bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 
 
 const EMPTY_GAME = [
@@ -58,7 +58,7 @@ class DatabaseAccess {
         const user = {
             email: email,
             password: passwordHash,
-            token: uuid.v4(),
+            token: uuid(),
         };
 
         await usersCollection.insertOne(user);
@@ -73,7 +73,7 @@ class DatabaseAccess {
                 {user1: requestingUser},
                 {user2: requestingUser}
             ]};
-        const options = {limit: 10,};
+        const options = {limit: 30,};
         const cursor = gamesCollection.find(query, options);
         const resultGames = await cursor.toArray();
         return resultGames;
@@ -149,4 +149,4 @@ class DatabaseAccess {
     }
 }
 
-module.exports = { DatabaseAccess };
+export { DatabaseAccess };

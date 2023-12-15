@@ -22,12 +22,12 @@ class WebSocketAccess {
 
     #configureWebSocket() {
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        this.#socket = new WebSocket(`${protocol}://${window.location.host}/ws?gameId=${gameId}`);
+        this.#socket = new WebSocket(`${protocol}://${window.location.host}/ws?gameId=${this.gameId}`);
         this.#socket.onopen = (event) => {
-            console.log(`Connection opened for game ${gameId}`);
+            // console.log(`Connection opened for game ${this.gameId}`);
         };
         this.#socket.onclose = (event) => {
-            console.log(`Connection closed for game ${gameId}`);
+            // console.log(`Connection closed for game ${this.gameId}`);
         };
         this.#socket.onmessage = async (event) => {
             const msg = JSON.parse(await event.data.text());
@@ -88,3 +88,5 @@ class WebSocketAccess {
           this.#socket.send(JSON.stringify(move));
     }
 }
+
+export { WebSocketAccess };

@@ -128,3 +128,13 @@ During this deliverable I converted my static website into a RESTful web server 
 **Data sent over WebSocket connection:** Emoji reaction and gameplay data (marking squares) are sent over the websocket connection and update the UI in real time.
 
 **WebSocket data displayed in the application interface:** Clicking an emoji reaction displays it on the other user's screen for 5 seconds. Making a mark when it is your turn also makes the mark on the other user's screen and enables them to make a mark.
+
+## React Deliverable
+
+**Bundled using Vite:** Vite is a dependency and running npm run build transpiles the app into valid html and javascript using vite
+
+**Multiple functional react components:** Login, creating a game, selecting a game, displaying games are all functional react components
+
+**React router:** Movement between login, about page, game select page, create game page, and play game page are all done with React routing
+
+**React hooks:** useState, useEffect, and useLocation are all used to create a dynamic experience and change app functionality based on the location in the app

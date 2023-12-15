@@ -1,5 +1,6 @@
+import { GameData } from './models';
+
 async function getUserGames() {
-    // TODO: In future updates, pull game data from database and not from constants
     const currentUser = localStorage.getItem("username");
     
     const storedGames = JSON.parse(localStorage.getItem("localGames"));
@@ -27,13 +28,6 @@ async function getUserGames() {
 
 async function saveNewGame(newGameData) {
     // Save a newly created game.
-    // let newGames = [newGameData];
-    // let currentGames = localStorage.getItem("localGames");
-    // const currentGamesObj = JSON.parse();
-    // if (currentGames && currentGamesObj) {
-    //     newGames = newGames.concat(currentGamesObj);
-    // }
-    // localStorage.setItem("localGames", JSON.stringify(newGames));
     console.log(newGameData);
     await fetch('/api/auth/createGame', {
         method: 'POST',
@@ -80,3 +74,5 @@ async function fetchSpecificGame(gameId) {
     let game = await gameResponse.json();
     return new GameData(game['_id'], game['gameData'], game['user1'], game['user2'], game['userTurn']);
 }
+
+export { getUserGames, saveNewGame, updateGame, acceptOrRejectGame, fetchSpecificGame };
