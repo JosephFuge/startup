@@ -1,20 +1,20 @@
 const PORT_NUM = process.argv.length > 2 ? process.argv[2] : 4000;
-const bcrypt = require('bcrypt');
-const { DatabaseAccess } = require('./dbAccess.js');
-const { peerProxy } = require('./peerProxy.js');
+import bcrypt from 'bcrypt';
+import { DatabaseAccess } from './dbAccess.js';
+import { peerProxy } from './peerProxy.js';
 
-const config = require('./dbConfig.json');
+import config from './dbConfig.json' assert { type: 'json' };
 const ticDB = new DatabaseAccess(config);
 
 
-const express = require('express');
+import express from 'express';
 const app = express();
 
 // JSON parsing middleware
 app.use(express.json());
 
 // Use the cookie parser middleware
-const cookieParser = require('cookie-parser');
+import cookieParser from 'cookie-parser';
 app.use(cookieParser());
 
 // Prevent client from getting to game subfiles
@@ -72,7 +72,7 @@ app.post('/login', async (req, res) => {
 
 async function checkAuth (req, res, next) {
     try {
-      authToken = req.cookies['token'];
+      const authToken = req.cookies['token'];
       const user = await ticDB.getUserByToken(authToken);
       if (authToken && user) {
         next();
@@ -166,7 +166,7 @@ secureApiRouter.post('/auth/updateGame', checkAuth, async (req, res) => {
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
-    res.sendFile('index.html', { root: 'public' });
+    res.sendFile('index.html', { root: '/public' });
 });
 
 // Send data for specific game

@@ -11,7 +11,7 @@ async function login() {
 
     if (loginResponse.ok) {
         localStorage.setItem("username", userEmail);
-        window.location.href = "game/gameselect.html";
+        window.location.href = "/gameselect";
     } else {
         const loginError = document.getElementById('loginErrorText');
         loginError.innerHTML = 'Invalid username or password';
@@ -31,7 +31,7 @@ async function register() {
     
     if (registerResponse.ok) {
         localStorage.setItem("username", userEmail);
-        window.location.href = "game/gameselect.html";
+        window.location.href = "/gameselect";
     } else {
         const loginError = document.getElementById('loginErrorText')
         loginError.innerHTML = 'Couldn\'t register user - try a different username';
