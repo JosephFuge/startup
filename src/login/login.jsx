@@ -1,20 +1,24 @@
 import React from 'react';
+import { AuthState } from './authState';
+import { Unauthenticated } from './unauthenticated';
 
-export function Login() {
+export function Login({userName, authState, onAuthChange }) {
+
     return (
         <main className='container-fluid bg-secondary text-center'>
-            <div id="centralLoginBlock">
-                <h2>Welcome to Recursive TicTacToe!</h2>
-                <p>To learn more about Recursive TicTacToe before logging in, go to the about page.</p>
-                <form id="loginForm">
-                <input type="text" id="username" className="text-field" placeholder="Username"></input>
-                    <input type="password" id="password" className="text-field" placeholder="Password"></input>
-                    <p className="error-text" id="loginErrorText">Invalid username or password</p>
-                    <span>
-                        <input className="rounded-button" type="button" onClick={()=>register()} value="Register"></input>
-                        <input className="rounded-button" type="button" onClick={()=>login()} value="Login"></input>
-                    </span>
-                </form>
+            <div>
+                {authState !== AuthState.Unknown && <h1>Welcome to Simon</h1>}
+                {authState === AuthState.Authenticated && (
+                <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
+                )}
+                {authState === AuthState.Unauthenticated && (
+                <Unauthenticated
+                    userName={userName}
+                    onLogin={(loginUserName) => {
+                    onAuthChange(loginUserName, AuthState.Authenticated);
+                    }}
+                />
+                )}
             </div>
         </main> 
     );
