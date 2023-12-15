@@ -5,9 +5,6 @@ function newGame() {
     const opponentUsername = document.getElementById('opponentUsername').value;
     const currentUsername = localStorage.getItem("username");
 
-    console.log(`opponent: ${opponentUsername}`);
-    console.log(`current: ${currentUsername}`);
-
     saveNewGame(new GameData(0, [
         ['', '', '', '', '', '', '', '', ''], 
         ['', '', '', '', '', '', '', '', ''],
@@ -18,7 +15,7 @@ function newGame() {
         ['', '', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', '', '']], currentUsername, opponentUsername, 0)).then((_) => {
-            setTimeout(()=> {window.location.href = "/gameselect";}, 3000);
+            setTimeout(()=> {window.location.href = "/gameselect";});
         }).catch();
 
     // document.getElementById('recursionLayersSelect');

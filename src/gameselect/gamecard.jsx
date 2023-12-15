@@ -1,8 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { acceptOrRejectGame } from '../databaseAccess';
 
 export function GameCard({gameData, currentUser}) {
     const currentGame = gameData;
+
+    console.log(currentGame);
+
+    console.log(currentUser);
 
     const navigate = useNavigate();
 

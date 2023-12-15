@@ -73,7 +73,7 @@ class DatabaseAccess {
                 {user1: requestingUser},
                 {user2: requestingUser}
             ]};
-        const options = {limit: 10,};
+        const options = {limit: 30,};
         const cursor = gamesCollection.find(query, options);
         const resultGames = await cursor.toArray();
         return resultGames;
