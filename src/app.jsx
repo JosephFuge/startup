@@ -1,13 +1,14 @@
 import React from 'react';
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthState } from './login/authState';
 import { About } from './about/about';
 import { Login } from './login/login';
+import { logout } from './services';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
 export default function App() { 
-    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+    const [userName, setUserName] = React.useState(localStorage.getItem('username') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
 
@@ -35,6 +36,12 @@ export default function App() {
                         </g>
                     </svg>Recursive TicTacToe Startup - Home</h1>
                     <nav>
+                        {authState === AuthState.Authenticated && (
+                            <NavLink to="/" className="rounded-button" onClick={()=>{logout(); setAuthState(AuthState.Unauthenticated); localStorage.removeItem('username'); }}>
+                                <svg className="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" clipRule="evenodd" viewBox="0 0 24 24"><path fill="currentColor" d="M16 2v7h-2v-5h-12v16h12v-5h2v7h-16v-20h16zm2 9v-4l6 5-6 5v-4h-10v-2h10z"/></svg>
+                                <p className="nav-button-text"> Logout</p>
+                            </NavLink>
+                        )}
                         {authState === AuthState.Unauthenticated && (
                             <NavLink to="/" className="rounded-button">
                                 <svg className="nav-button-icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path fill="currentColor" d="M22 11.414v12.586h-20v-12.586l-1.293 1.293-.707-.707 12-12 12 12-.707.707-1.293-1.293zm-6 11.586h5v-12.586l-9-9-9 9v12.586h5v-9h8v9zm-1-7.889h-6v7.778h6v-7.778z"/></svg><p className="nav-button-text"> Home</p>
@@ -43,11 +50,7 @@ export default function App() {
                         <NavLink to="/about" className="rounded-button"><svg className="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 18h-2v-8h2v8zm-1-12.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/></svg>
                             <p className="nav-button-text"> About</p>
                         </NavLink>
-                        {/* {authState === AuthState.Authenticated && (
-                            <NavLink to="">
-
-                            </NavLink>
-                        )} */}
+                        
                     </nav>
                     {authState === AuthState.Authenticated && (
                         <div id="usernameBlock">
@@ -70,7 +73,7 @@ export default function App() {
                     {/* <Route path='/gameselect' element={<Play />} /> */}
                     {/* <Route path='/scores' element={<Scores />} /> */}
                     <Route path='/about' element={<About />} />
-                    {/* <Route path='*' element={<NotFound />} /> */}
+                    <Route path='*' element={<Navigate to="/" replace />} />
                 </Routes>
 
                 

@@ -1,14 +1,10 @@
 import React from 'react';
 
-export function GameCard(gameData) {
+export function GameCard({gameData, currentUser}) {
     const currentGame = gameData;
-    const currentUser = localStorage.getItem('username');
-
-    console.log(`Showing GameCard:\n ${currentGame}`);
 
     return (
         <>
-            <h2>Select a Game</h2>
             {((currentUser === currentGame.user1 && currentGame.turn === 2) || (currentUser === currentGame.user2 && currentGame.turn === 1) || (currentUser === currentGame.user1 && currentGame.turn === 0)) ?
             (<div><div className="async-game">
              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -16,7 +12,7 @@ export function GameCard(gameData) {
              </svg>
              <h3>Waiting for Opponent...</h3>
              <p>
-                Game with: {currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1};
+                Game with: {currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1}
              </p>
          </div><br /></div>) :
          ((currentUser === currentGame.user1 && currentGame.turn === 1) || (currentUser === currentGame.user2 && currentGame.turn === 2)) ?
@@ -37,13 +33,12 @@ export function GameCard(gameData) {
                                     <rect id="svg_13" height="41.15266" width="3.74115" y="3.91809" x="32" stroke="#000" fill="#FFFFFF"/>
                                     <rect transform="rotate(90 24.6693 14.8888)" stroke="#000" id="svg_14" height="41.15266" width="3.74115" y="-5.68757" x="22.79879" fill="#FFFFFF"/>
                                     <rect transform="rotate(90 24.8716 34.1001)" stroke="#000" id="svg_15" height="41.15266" width="3.74115" y="13.52374" x="23.00102" fill="#FFFFFF"/>
-                                    <path stroke="#000" style="vector-effect: non-scaling-stroke;" strokeWidth="0" id="svg_16" d="m37.15098,39.16139l2.05922,-2.05922l2.18748,2.18746l2.18748,-2.18746l2.05924,2.05922l-2.18748,2.18748l2.18748,2.18748l-2.05924,2.05924l-2.18748,-2.18748l-2.18748,2.18748l-2.05922,-2.05924l2.18746,-2.18748l-2.18746,-2.18748z" fill="#ff0000"/>
+                                    <path stroke="#000" style={{vectorEffect: 'non-scaling-stroke'}} strokeWidth="0" id="svg_16" d="m37.15098,39.16139l2.05922,-2.05922l2.18748,2.18746l2.18748,-2.18746l2.05924,2.05922l-2.18748,2.18748l2.18748,2.18748l-2.05924,2.05924l-2.18748,-2.18748l-2.18748,2.18748l-2.05922,-2.05924l2.18746,-2.18748l-2.18746,-2.18748z" fill="#ff0000"/>
                                     <path strokeWidth="0" stroke="#000" id="svg_17" d="m3.74856,7.44546l0,0c0,-2.40124 1.94659,-4.34782 4.34782,-4.34782l0,0c1.15311,0 2.259,0.45807 3.07438,1.27345c0.81538,0.81538 1.27345,1.92126 1.27345,3.07438l0,0c0,2.40124 -1.94659,4.34782 -4.34782,4.34782l0,0c-2.40124,0 -4.34782,-1.94659 -4.34782,-4.34782zm2.17391,0l0,0c0,1.20062 0.97329,2.17391 2.17391,2.17391c1.20062,0 2.17391,-0.97329 2.17391,-2.17391c0,-1.20062 -0.97329,-2.17391 -2.17391,-2.17391l0,0c-1.20062,0 -2.17391,0.97329 -2.17391,2.17391z" fill="#007fff"/>
                                 </g>
                             </svg>
                             <h3>Your turn!</h3>
-                            <p>Game with: 
-                                {currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1}
+                            <p>Game with: {currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1}
                             </p>
                         </div>
                     </button>
@@ -74,8 +69,7 @@ export function GameCard(gameData) {
                         <button className="rounded-button" onClick={()=>{acceptOrRejectGame(false, currentGame.id);}}>Reject</button>
                     </span>
                     <p>
-                        Request from: 
-                        {currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1}
+                        Request from: {currentUser === currentGame.user1 ? currentGame.user2 : currentGame.user1}
                     </p>
                 </div>
                 <br/>

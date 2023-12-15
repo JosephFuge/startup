@@ -106,8 +106,8 @@ footer {
     padding-bottom: 16px;
     border-top: 5px solid;
     border-image: linear-gradient(45deg, #0863a0, 10%, #27363e 80%) 1;
-    position: absolute;
-    bottom: 0;
+    /* position: fixed;
+    bottom: 0; */
 }
 
 footer > * {
@@ -115,6 +115,9 @@ footer > * {
     padding-left: 16px;
 }
 
+main {
+    height: 100%;
+}
 
 .rounded-button {
     margin-left: 8px;
