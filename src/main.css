@@ -41,7 +41,7 @@ header > h1 {
 }
 
 .error-text {
-    display: none;
+    /* display: none; */
     color: red;
 }
 

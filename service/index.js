@@ -58,7 +58,7 @@ app.post('/register', async (req, res) => {
 });
 
 
-app.post('/login', async (req, res) => {
+apiRouter.post('/login', async (req, res) => {
     const user = await ticDB.getUser(req.body.email);
     if (user) {
       if (await bcrypt.compare(req.body.password, user.password)) {
@@ -125,6 +125,8 @@ app.get('/user/me', async (req, res) => {
 // Send games for a particular user
 secureApiRouter.post('/auth/fetchGames', checkAuth, async (req, res) => {
     const requestingUser = req.body['user'];
+    
+    console.log(`Games requested by: ${requestingUser}`);
 
     const resultGames = await ticDB.getGames(requestingUser);
 
