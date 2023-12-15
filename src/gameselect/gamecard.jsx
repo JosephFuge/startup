@@ -5,10 +5,6 @@ import { acceptOrRejectGame } from '../databaseAccess';
 export function GameCard({gameData, currentUser}) {
     const currentGame = gameData;
 
-    console.log(currentGame);
-
-    console.log(currentUser);
-
     const navigate = useNavigate();
 
     return (

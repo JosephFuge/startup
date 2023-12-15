@@ -125,8 +125,6 @@ app.get('/user/me', async (req, res) => {
 // Send games for a particular user
 secureApiRouter.post('/auth/fetchGames', checkAuth, async (req, res) => {
     const requestingUser = req.body['user'];
-    
-    console.log(`Games requested by: ${requestingUser}`);
 
     const resultGames = await ticDB.getGames(requestingUser);
 
