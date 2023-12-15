@@ -1,17 +1,20 @@
+import { WebSocketAccess } from './websocketAccess';
+import { updateGame, fetchSpecificGame } from '../databaseAccess';
+
 const markedCircles = new Set([]);
 const markedCrosses = new Set([]);
 let thisGame;
 let currentUser = '';
 let gameOver = false;
-const gameId = localStorage.getItem('currentGameId');
+let gameId = localStorage.getItem('currentGameId');
 let webSocket = new WebSocketAccess(gameId, markSquare, setUserEmojiReaction);
 
-async function setUpGame() {
+async function setUpGame(thisGameData) {
     if (gameId) {
         currentUser = localStorage.getItem('username');
-        thisGame = await fetchSpecificGame(gameId);
+        thisGame = thisGameData;
 
-        document.getElementById('opponentUserName').innerText = currentUser === thisGame.user1 ? thisGame.user2 : thisGame.user1;
+        // document.getElementById('opponentUserName').innerText = currentUser === thisGame.user1 ? thisGame.user2 : thisGame.user1;
 
         const circlesToMark = new Set([]);
         const crossesToMark = new Set([]);
@@ -303,3 +306,5 @@ function setDefaultBarAttributes(barElement) {
     barElement.setAttribute('height', '550');
     barElement.setAttribute('width', '25');
 }
+
+export { setUpGame, markSquare, sendEmoji };

@@ -3,6 +3,7 @@ import { BrowserRouter, NavLink, Route, Routes, Navigate } from 'react-router-do
 import { AuthState } from './login/authState';
 import { About } from './about/about';
 import { Login } from './login/login';
+import { PlayGame } from './playgame/playgame';
 import { logout } from './services';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
@@ -34,7 +35,7 @@ export default function App() {
                             <path stroke="#000" strokeWidth="0" id="svg_16" d="m37.15098,39.16139l2.05922,-2.05922l2.18748,2.18746l2.18748,-2.18746l2.05924,2.05922l-2.18748,2.18748l2.18748,2.18748l-2.05924,2.05924l-2.18748,-2.18748l-2.18748,2.18748l-2.05922,-2.05924l2.18746,-2.18748l-2.18746,-2.18748z" fill="#ff0000"/>
                             <path strokeWidth="0" stroke="#000" id="svg_17" d="m3.74856,7.44546l0,0c0,-2.40124 1.94659,-4.34782 4.34782,-4.34782l0,0c1.15311,0 2.259,0.45807 3.07438,1.27345c0.81538,0.81538 1.27345,1.92126 1.27345,3.07438l0,0c0,2.40124 -1.94659,4.34782 -4.34782,4.34782l0,0c-2.40124,0 -4.34782,-1.94659 -4.34782,-4.34782zm2.17391,0l0,0c0,1.20062 0.97329,2.17391 2.17391,2.17391c1.20062,0 2.17391,-0.97329 2.17391,-2.17391c0,-1.20062 -0.97329,-2.17391 -2.17391,-2.17391l0,0c-1.20062,0 -2.17391,0.97329 -2.17391,2.17391z" fill="#007fff"/>
                         </g>
-                    </svg>Recursive TicTacToe Startup - Home</h1>
+                    </svg>Recursive TicTacToe Startup</h1>
                     <nav>
                         {authState === AuthState.Authenticated && (
                             <NavLink to="/" className="rounded-button" onClick={()=>{logout(); setAuthState(AuthState.Unauthenticated); localStorage.removeItem('username'); }}>
@@ -70,8 +71,8 @@ export default function App() {
                             }
                         }
                         />} exact />
-                    {/* <Route path='/gameselect' element={<Play />} /> */}
-                    {/* <Route path='/scores' element={<Scores />} /> */}
+                    {/* <Route path='/gameselect' element={<GameSelect />} />*/}
+                    <Route path='/playgame' element={<PlayGame />} />
                     <Route path='/about' element={<About />} />
                     <Route path='*' element={<Navigate to="/" replace />} />
                 </Routes>
