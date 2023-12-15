@@ -1,12 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { CreateGame } from './creategame/creategame';
 import { AuthState } from './login/authState';
 import { About } from './about/about';
 import { Login } from './login/login';
 import { PlayGame } from './playgame/playgame';
 import { Header } from './header/header';
-import { logout } from './services';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
 export default function App() { 
@@ -29,7 +28,7 @@ export default function App() {
                             }
                         }
                         />} exact />
-                    {/* <Route path='/gameselect' element={<GameSelect />} />*/}
+                    <Route path='/creategame' element={<CreateGame />} />
                     <Route path='/playgame' element={<PlayGame />} />
                     <Route path='/about' element={<About />} />
                     <Route path='*' element={<Navigate to="/" replace />} />

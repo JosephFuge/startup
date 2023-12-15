@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
 import { getUserGames } from '../databaseAccess';
 import { GameCard } from './gamecard';
 
@@ -12,8 +12,6 @@ export function GameSelect({ currentUser }) {
             setGames(gamesData);
         }).catch();
       }, []);
-    
-    let gamesEl = '';
 
     return (
         <main>
@@ -27,7 +25,7 @@ export function GameSelect({ currentUser }) {
                 />
             ))}
             <div id="createNewGame">
-                <a className="rounded-button" id="newGame" href="/creategame"><input type="submit" value="New Game +" /></a>
+                <NavLink className="rounded-button" id="newGame" to="/creategame">New Game +</NavLink>
             </div>
         <br />
     </div></ main>

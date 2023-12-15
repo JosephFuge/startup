@@ -40,7 +40,7 @@ export function Header({ authState, setAuthState, userName }) {
                                 <svg className="nav-button-icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path fill="currentColor" d="M22 11.414v12.586h-20v-12.586l-1.293 1.293-.707-.707 12-12 12 12-.707.707-1.293-1.293zm-6 11.586h5v-12.586l-9-9-9 9v12.586h5v-9h8v9zm-1-7.889h-6v7.778h6v-7.778z"/></svg><p className="nav-button-text"> Home</p>
                             </NavLink>
                         )}
-                        {authState === AuthState.Authenticated && location.pathname === '/playgame' && (
+                        {authState === AuthState.Authenticated && (location.pathname === '/playgame' || location.pathname === '/creategame') && (
                             <NavLink to="/gameselect" className="rounded-button">
                                 <svg className="nav-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 17h-12v-2h12v2zm0-4h-12v-2h12v2zm0-4h-12v-2h12v2z"/></svg><p className="nav-button-text"> Select Game</p>
                             </NavLink>
