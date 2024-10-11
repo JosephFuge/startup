@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../services';
 import { AuthState } from '../login/authState';
 
+// I dont know
 export function Header({ authState, setAuthState, userName }) {
     const location = useLocation();
 
